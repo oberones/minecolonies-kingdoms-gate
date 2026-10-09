@@ -2,7 +2,8 @@
 .gradle-home/
 .tools/
 build/
-run*/
+dist/
+/run*/
 libs/
 .DS_Store
 *.log

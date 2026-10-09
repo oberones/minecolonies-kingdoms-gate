@@ -1,0 +1,19 @@
+{
+  "result": "PASS",
+  "isolatedRegenerations": 2,
+  "filesCompared": 12,
+  "sha256": {
+    "assets/provenance.json": "7f3ca1ce2e06f54461d1836c16d58e6617e28d48c94c854b8815db47eb32fe76",
+    "src/main/resources/assets/minecolonies_cult/textures/block/kingdoms_gate.png": "10a9c432bb4e6f0cabca19c80dfd347f8be00520c4c1fbb3d4a24245e9f45df3",
+    "src/main/resources/assets/minecolonies_cult/textures/entity/cult_leader.png": "43746f3a72e835d53c1ddfa657fc3d83e282399a36592a7972b8cab37436895e",
+    "src/main/resources/assets/minecolonies_cult/textures/gui/cult_icon.png": "a5c82de96a23073a3164d96212814bf8e307271dc6092e1681fb5e8353a9e509",
+    "src/main/resources/blueprints/minecolonies_cult/kingdoms_gate/kingdoms_gate.png": "a5c82de96a23073a3164d96212814bf8e307271dc6092e1681fb5e8353a9e509",
+    "src/main/resources/blueprints/minecolonies_cult/kingdoms_gate/mysticism/kingdoms_gate1.blueprint": "aae04ac6b294b6e9e94dc46ccb5e4373efdf26b17d5a52eb1a8625f35f6c3047",
+    "src/main/resources/blueprints/minecolonies_cult/kingdoms_gate/mysticism/kingdoms_gate2.blueprint": "b9a428e8e953ca5ace1ca673fa3d5716bd5589e11115efeff69089c4c89bd9db",
+    "src/main/resources/blueprints/minecolonies_cult/kingdoms_gate/mysticism/kingdoms_gate3.blueprint": "a736dbae720a775a3a7284bbf083d41906291c91a33fa0368f3be9948e159be3",
+    "src/main/resources/blueprints/minecolonies_cult/kingdoms_gate/mysticism/kingdoms_gate4.blueprint": "4c0ce623530412ef465c4a85b56b8cc860789c5b7e3f9f8465d8ef6261ef77ab",
+    "src/main/resources/blueprints/minecolonies_cult/kingdoms_gate/mysticism/kingdoms_gate5.blueprint": "c04b0c45f894ad061104fc8640f12bb052cb32ed3c3c1341d6032fb241869c21",
+    "src/main/resources/blueprints/minecolonies_cult/kingdoms_gate/pack.json": "c0442b25ca7eb0e6a3c46f08157b6510694b44760f3680026dff8d9617fedcae",
+    "src/main/resources/data/minecolonies_cult/structure/empty.nbt": "bc4f2ef59b92d8861201a59a5ce4a02bab8c378317465db8a5e7865e3d9e151b"
+  }
+}

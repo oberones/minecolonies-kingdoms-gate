@@ -26,27 +26,37 @@ The dependencies are not bundled or redistributed inside the addon. A future cha
 ## Install and play
 
 1. Back up the intended world and begin with a disposable test world.
-2. Install the pinned dependencies and put `minecolonies-cult-0.1.0.jar` in `mods` on **both the client and server**. Single-player also needs the addon in its client installation.
+2. Install the pinned dependencies and put `minecolonies-cult-0.2.0.jar` in `mods` on **both the client and server**. Single-player also needs the addon in its client installation.
 3. Craft Kingdom’s Gate with a book surrounded by eight planks. Its block is also available in the Kingdom’s Gate creative tab.
-4. Use the MineColonies build tool, select the **Kingdom’s Gate** structure pack, and choose `mysticism/kingdoms_gate1`. The five blueprints share a 29 × 35 block footprint and a fixed anchor. Standard construction, upgrade, repair, inventory, hiring, and minimum-stock controls are provided by MineColonies.
-5. Construct level 1 and assign one adult citizen as Cult Leader through the hut’s worker controls. Only one Gate can be placed per colony. The leader immediately joins the cult.
-6. Open the hut’s congregation tab to see members, each adult’s speech progress, the next gathering, and any faith countdown.
+4. Use the MineColonies build tool, select the **Kingdom’s Gate** structure pack, and choose `mysticism/kingdoms_gate1`. The five blueprints grow from 9 × 13 to 29 × 35 blocks around the same hut position. Leave the final 29 × 35 footprint clear: in the unrotated preview it extends 14 blocks to each side of the hut, 3 in front, and 31 behind it. Rotation/mirroring rotates this reserved area too. Standard construction, upgrade, repair, inventory, hiring, and minimum-stock controls are provided by MineColonies.
+5. Construct level 1 and assign one adult citizen as Cult Leader through the hut’s worker controls. Only one Gate can be placed per colony. The leader receives cult membership benefits while assigned, occupying a separate place from recruited members.
+6. Open the hut’s congregation tab to see recruit occupancy/capacity, the leader, each adult’s speech progress, the next gathering, and any faith countdown.
 
 During the native work period, a healthy leader approaches adult colony citizens, including guards, and gives five-second speeches. A listener must stay within range and line of sight for all 100 ticks. Nearby adults may listen together; children, visitors, sleeping listeners, and unavailable citizens do not receive credit. Each citizen can receive one credit per Minecraft day, joining after six distinct days. Members retain their jobs.
 
-| Building level | Hearing radius | Native happiness factor, weight 1 |
-| --- | --- | --- |
-| 1 | 8 | 1.25 |
-| 2 | 10 | 1.50 |
-| 3 | 12 | 1.75 |
-| 4 | 14 | 2.00 |
-| 5 | 16 | 2.25 |
+| Building level | Recruit capacity (+1 leader) | Footprint | Hearing radius | Native happiness factor, weight 1 |
+| --- | --- | --- | --- | --- |
+| 1 | 4 | 9 × 13 | 8 | 1.25 |
+| 2 | 8 | 13 × 17 | 10 | 1.50 |
+| 3 | 16 | 17 × 23 | 12 | 1.75 |
+| 4 | 24 | 23 × 29 | 14 | 2.00 |
+| 5 | 32 | 29 × 35 | 16 | 2.25 |
+
+Capacity is fixed by the **completed** level. Queuing an upgrade does not unlock recruits. When full, the leader pauses recruitment speeches without changing partial progress. Recruitment resumes after an upgrade or a vacancy; citizens still need a complete speech to earn another daily credit. Simultaneous final credits are processed in citizen-ID order.
+
+Automatic leader membership ends on dismissal; previously earned speech progress remains. A previously recruited leader keeps permanent membership and is counted once. Existing overfull congregations and members returning from leadership keep their membership and bonuses, but further recruitment is blocked until there is space.
 
 These are weighted factors in MineColonies’ existing calculation, **not additional happiness points**. MineColonies’ cap of 10 remains in effect. Losing the completed Gate or its leader begins a seven-day grace period. Members keep their last active level’s bonus; restoring operation cancels the countdown. Expiry clears membership and all speech progress. Entity/chunk unloading, illness, rain, raids, and missed gatherings do not themselves start faith decay.
 
-The calendar begins when construction and staffing first become operational. Every seventh Minecraft day, members gather at tick 16000, perform the ritual at 18000–18600, and then resume native AI. Native sleep handling wakes sleeping attendees and controls their return to their homes; guards resume their native duty schedule. The ritual uses turns, synchronized arm gestures, low-pitched wordless sounds, and purple particles. The addon neither teleports attendees nor requests chunk tickets. Unreachable/unavailable attendees drop out. An unavailable leader, invalid Gate, unloaded gathering area, or relevant vanilla/MineColonies raid cancels the event.
+The calendar begins when construction and staffing first become operational. Every seventh Minecraft day, members gather at tick 16000, perform the ritual at 18000–18600, and then resume native AI. Native sleep handling wakes sleeping attendees and controls their return to their homes; guards resume their native duty schedule. The ritual uses turns, synchronized arm gestures, low-pitched wordless sounds, and purple particles. The addon neither teleports attendees nor requests chunk tickets. The leader has priority, followed by citizen ID. Each attendee has a distinct safe position; attendance is limited to available positions and the level’s capacity plus the leader. Over-capacity members keep their bonuses even when they cannot attend. Unreachable/unavailable attendees drop out. An unavailable leader, invalid Gate, unloaded gathering area, or relevant vanilla/MineColonies raid cancels the event.
 
 Missed nights/weeks are skipped. Each occurrence is saved as consumed before gathering begins; restarting during a ceremony cancels it instead of resuming it. Backward time changes cannot grant duplicate daily speeches or replay an already consumed ceremony; the saved calendar waits for world time to catch up.
+
+## Updating older worlds
+
+Back up worlds before installing this version on both client and server. Version 0.2.0 writes cult save format 2 and reads format 1 without deleting memberships or speech progress. Historical memberships remain permanent because their recruitment origin was not recorded. Downgrading the mod requires restoring the backup; the older version cannot read format 2. Client and server must use the same addon build because congregation synchronization has changed.
+
+Structure-pack version 2 replaces the old designs at their existing paths. Installing it does not rebuild world blocks. Use normal builder upgrade/repair work to adopt the new design. Old lower-level Gates occupied larger plots: blocks outside the new blueprint can remain and need manual cleanup. There is no automatic demolition or legacy design pack.
 
 ## Server configuration
 
@@ -86,7 +96,7 @@ python3 tools/prepare_modpack_test.py --server --headless-adjustments
 GRADLE_USER_HOME="$PWD/.gradle-home" ./gradlew runModpackGameTestServer
 ```
 
-The preparation script copies mods and configuration, never the player’s saves. Some chunk optimizers require the documented test-only adjustments in `validation/headless-config-overrides.json` for a headless server with no real players. See `validation/VERIFICATION.md` for the exact evidence and remaining interactive acceptance checks.
+The preparation script copies mods and configuration, never the player’s saves. It excludes installed `minecolonies-cult-*.jar` releases because Gradle supplies the addon under test; all 134 reference dependencies remain checksum-pinned. Some chunk optimizers require the documented test-only adjustments in `validation/headless-config-overrides.json` for a headless server with no real players. See `validation/VERIFICATION.md` for the exact evidence and remaining interactive acceptance checks.
 
 `python3 tools/generate_assets.py` reproducibly rebuilds the original textures, five blueprints, and their provenance manifest. Gathering markers are connected to the entrance; the runtime checks their support and clearance again in the actual world. The GameTest suite validates all eight rotation/mirror combinations for each level.
 

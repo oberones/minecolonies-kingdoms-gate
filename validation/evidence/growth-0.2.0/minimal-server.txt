@@ -1,0 +1,494 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.2.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :createMinecraftArtifacts UP-TO-DATE
+> Task :verifyReference
+
+> Task :compileJava
+Note: /Users/oberon/Projects/coding/mods/minecraft/minecolonies-cult/src/main/java/com/kingdomsgate/cult/gametest/CultCapacityGameTests.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :downloadAssets UP-TO-DATE
+> Task :writeGameTestServerLegacyClasspath UP-TO-DATE
+> Task :prepareGameTestServerRun UP-TO-DATE
+
+> Task :runGameTestServer
+WARN StatusConsoleListener Advanced terminal features are not available in this environment
+[00:13:23] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeserverdev, --gameDir, ., --fml.fmlVersion, 4.0.42, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.218, --fml.neoFormVersion, 20240808.144430]
+[00:13:23] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 21.0.12.1+1-LTS
+[00:13:23] [main/INFO] [cp.mo.mo.Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.12.1 by Eclipse Adoptium; OS Mac OS X arch aarch64 version 26.6.2
+[00:13:23] [main/INFO] [ne.ne.fm.lo.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgeserverdev
+[00:13:23] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/Users/oberon/Projects/coding/mods/minecraft/minecolonies-cult/.gradle-home/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.2+mixin.0.8.7/2af2f021d8e02a0220dc27a7a72b4666d66d44ca/sponge-mixin-0.15.2+mixin.0.8.7.jar%2394!/ Service=ModLauncher Env=SERVER
+/*******************************************************************************************************************************************************************************************************************************************************************************************************/
+/*                                                                                                                                         SpongePowered MIXIN                                                                                                                                         */
+/*******************************************************************************************************************************************************************************************************************************************************************************************************/
+/*                                         Code source : union:/Users/oberon/Projects/coding/mods/minecraft/minecolonies-cult/.gradle-home/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.2+mixin.0.8.7/2af2f021d8e02a0220dc27a7a72b4666d66d44ca/sponge-mixin-0.15.2+mixin.0.8.7.jar%2394!/ */
+/*                                    Internal Version : 0.8.7                                                                                                                                                                                                                                         */
+/*                                        Java Version : 21.0 (supports compatibility 6-21)                                                                                                                                                                                                            */
+/*                         Default Compatibility Level : JAVA_16                                                                                                                                                                                                                                       */
+/*                   Max Effective Compatibility Level : JAVA_13                                                                                                                                                                                                                                       */
+/*                                Detected ASM Version : ASM 9.8 (ASM10_EXPERIMENTAL)                                                                                                                                                                                                                  */
+/*                          Detected ASM Supports Java : Up to Java 25 (class file version 69.0)                                                                                                                                                                                                       */
+/*******************************************************************************************************************************************************************************************************************************************************************************************************/
+/*                                        Service Name : ModLauncher                                                                                                                                                                                                                                   */
+/*                                 Mixin Service Class : org.spongepowered.asm.service.modlauncher.MixinServiceModLauncher                                                                                                                                                                             */
+/*                       Global Property Service Class : org.spongepowered.asm.service.modlauncher.Blackboard                                                                                                                                                                                          */
+/*                                 Logger Adapter Type : Log4j2 (via ModLauncher)                                                                                                                                                                                                                      */
+/*******************************************************************************************************************************************************************************************************************************************************************************************************/
+/*                                         mixin.debug : <false>                                                                                                                                                                                                                                       */
+/*                                  mixin.debug.export : - <true>                                                                                                                                                                                                                                      */
+/*                           mixin.debug.export.filter : - - <null>                                                                                                                                                                                                                                    */
+/*                        mixin.debug.export.decompile : - - <true>                                                                                                                                                                                                                                    */
+/*                  mixin.debug.export.decompile.async : - - - <true>                                                                                                                                                                                                                                  */
+/* mixin.debug.export.decompile.mergeGenericSignatures : - - - <true>                                                                                                                                                                                                                                  */
+/*                                  mixin.debug.verify : - <false>                                                                                                                                                                                                                                     */
+/*                                 mixin.debug.verbose : - <false>                                                                                                                                                                                                                                     */
+/*                         mixin.debug.countInjections : - <false>                                                                                                                                                                                                                                     */
+/*                                  mixin.debug.strict : - <false>                                                                                                                                                                                                                                     */
+/*                           mixin.debug.strict.unique : - - <false>                                                                                                                                                                                                                                   */
+/*                          mixin.debug.strict.targets : - - <false>                                                                                                                                                                                                                                   */
+/*                                mixin.debug.profiler : - <false>                                                                                                                                                                                                                                     */
+/*                           mixin.dumpTargetOnFailure : <false>                                                                                                                                                                                                                                       */
+/*                                        mixin.checks : <false>                                                                                                                                                                                                                                       */
+/*                             mixin.checks.interfaces : - <false>                                                                                                                                                                                                                                     */
+/*                      mixin.checks.interfaces.strict : - - <false>                                                                                                                                                                                                                                   */
+/*                             mixin.ignoreConstraints : <false>                                                                                                                                                                                                                                       */
+/*                                       mixin.hotSwap : <false>                                                                                                                                                                                                                                       */
+/*                                       mixin.env.obf : - <false>                                                                                                                                                                                                                                     */
+/*                             mixin.env.disableRefMap : - <false>                                                                                                                                                                                                                                     */
+/*                               mixin.env.remapRefMap : - <false>                                                                                                                                                                                                                                     */
+/*                       mixin.env.refMapRemappingFile : - <>                                                                                                                                                                                                                                          */
+/*                        mixin.env.refMapRemappingEnv : - <searge>                                                                                                                                                                                                                                    */
+/*                      mixin.env.allowPermissiveMatch : - <false>                                                                                                                                                                                                                                     */
+/*                            mixin.env.ignoreRequired : - <false>                                                                                                                                                                                                                                     */
+/*                               mixin.env.compatLevel : - <false>                                                                                                                                                                                                                                     */
+/*                          mixin.env.shiftByViolation : - <warn>                                                                                                                                                                                                                                      */
+/*                      mixin.initialiserInjectionMode : <default>                                                                                                                                                                                                                                     */
+/*               mixin.tunable.classReaderExpandFrames : - <false>                                                                                                                                                                                                                                     */
+/*******************************************************************************************************************************************************************************************************************************************************************************************************/
+/*                                    UNSAFE_INJECTION : available=<true> enabled=<true>                                                                                                                                                                                                               */
+/*                       INJECTORS_IN_INTERFACE_MIXINS : available=<true> enabled=<true>                                                                                                                                                                                                               */
+/*******************************************************************************************************************************************************************************************************************************************************************************************************/
+/*                                       Detected Side : SERVER                                                                                                                                                                                                                                        */
+/*******************************************************************************************************************************************************************************************************************************************************************************************************/
+[00:13:23] [main/INFO] [ne.ne.fm.lo.mo.lo.JarInJarDependencyLocator/]: Found 2 dependencies adding them to mods collection
+[00:13:23] [main/INFO] [ne.ne.fm.lo.mo.ModDiscoverer/]: 
+     Mod List:
+		Name Version (Mod Id)
+
+		Domum Ornamentum 1.0.234-snapshot (domum_ornamentum)
+		MineColonies 1.1.1343-1.21.1-snapshot (minecolonies)
+		MineColonies: Kingdom's Gate 0.2.0 (minecolonies_cult)
+		Minecraft 1.21.1 (minecraft)
+		Multi-Piston 1.2.58-1.21.1 (multipiston)
+		NeoForge 21.1.218 (neoforge)
+		Structurize 1.0.831-1.21.1 (structurize)
+		Towntalk 1.2.0 (towntalk)
+		UI Library Mod 1.0.211-1.21.1-snapshot (blockui)
+[00:13:23] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
+[00:13:23] [main/INFO] [cp.mo.mo.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeserverdev' with arguments [--gameDir, .]
+[00:13:24] [main/INFO] [mixin/]: Attempting to load Fernflower decompiler (Threaded mode)
+[00:13:24] [main/INFO] [mixin/]: Fernflower could not be loaded, exported classes will not be decompiled. NoClassDefFoundError: org/jetbrains/java/decompiler/main/extern/IResultSaver
+[00:13:25] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.0).
+[00:13:27] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[00:13:27] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[00:13:27] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[00:13:27] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[00:13:27] [main/WARN] [minecraft/Commands]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[00:13:27] [modloading-worker-0/INFO] [ne.ne.ne.co.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.218, for MC 1.21.1
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Warped Netherlands
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Urban Savanna
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Desert Oasis
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Dark Oak Treehouse
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Lost Mesa City
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Nordic Spruce
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Stalactite Caves
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Pagoda
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Minecolonies Original
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Cavern
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Caledonia
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Medieval Oak
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Medieval Dark Oak
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Medieval Birch
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Shire
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Incan
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Space Wars
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Ancient Athens
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Jungle Treehouse
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Medieval Spruce
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Fortress
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Urban Birch
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Colonial
+[00:13:28] [Structurize IO Worker #0/INFO] [structurize/]: Registered structure pack: Kingdom's Gate
+[00:13:28] [Structurize IO Worker #0/WARN] [structurize/]: Failed loading packs from main folder path: .
+[00:13:28] [Structurize IO Worker #0/WARN] [structurize/]: Failed loading client packs from main folder path: .
+[00:13:28] [Structurize IO Worker #0/WARN] [structurize/]: Finished discovering Server Structure packs
+[00:13:28] [modloading-worker-0/WARN] [minecolonies/]: Register mappings
+[00:13:28] [main/INFO] [mojang/YggdrasilAuthenticationService]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[00:13:28] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/Users/oberon/Projects/coding/mods/minecraft/minecolonies-cult/build/moddev/artifacts/neoforge-21.1.218.jar%23125!/assets/.mcassetsroot' uses unexpected schema
+[00:13:28] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/Users/oberon/Projects/coding/mods/minecraft/minecolonies-cult/build/moddev/artifacts/neoforge-21.1.218.jar%23125!/data/.mcassetsroot' uses unexpected schema
+[00:13:28] [main/INFO] [ne.ne.ne.ga.GameTestHooks/]: Enabled Gametest Namespaces: [minecolonies_cult]
+[00:13:29] [main/INFO] [minecraft/RecipeManager]: Loaded 1594 recipes
+[00:13:29] [main/INFO] [minecraft/AdvancementTree]: Loaded 1672 advancements
+[00:13:29] [main/INFO] [minecolonies/]: Beginning load of custom recipes for colony workers
+[00:13:29] [main/INFO] [minecolonies/]: Loaded 161 recipes for 16 crafters
+[00:13:29] [main/INFO] [minecolonies/]: Research loading...
+[00:13:29] [main/INFO] [minecolonies/]: Research loaded. Located 4 branches, 208 researches and 103 effects.
+[00:13:29] [main/INFO] [minecolonies/]: Loading quests from data
+[00:13:29] [main/INFO] [minecolonies/]: Finished loading quests from data
+[00:13:29] [main/WARN] [minecolonies/]: Read 1634 items with their nbt keys for compatibility.
+[00:13:29] [main/INFO] [minecolonies/]: [Study items Loader]: Starting reload...
+[00:13:29] [main/INFO] [minecolonies/]: [Study items Loader]: Finished reloading. 2 entries created.
+[00:13:29] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing start region for dimension minecraft:overworld
+[00:13:29] [worldgen/INFO] [minecraft/LoggerChunkProgressListener]: Preparing spawn area: 2%
+[00:13:30] [Server thread/INFO] [minecraft/LoggerChunkProgressListener]: Time elapsed: 125 ms
+[00:13:30] [Server thread/INFO] [minecraft/GameTestServer]: Started game test server
+[00:13:30] [Server thread/INFO] [ne.ne.ne.se.pe.PermissionAPI/]: Successfully initialized permission handler neoforge:default_handler
+[00:13:30] [Server thread/WARN] [minecolonies/]: Starting Compat Discovery
+[00:13:30] [Server thread/INFO] [minecolonies/]: Finished discovering Ores 19 22
+[00:13:30] [Server thread/INFO] [minecolonies/]: Finished discovering saplings 14
+[00:13:30] [Server thread/INFO] [minecolonies/]: Finished discovering plantables 19
+[00:13:30] [Server thread/INFO] [minecolonies/]: Finished discovering food 107 121
+[00:13:30] [Server thread/INFO] [minecolonies/]: Finished discovering fuel 249
+[00:13:30] [Server thread/INFO] [minecolonies/]: Finished discovering flowers 26
+[00:13:30] [Server thread/INFO] [minecolonies/]: Finished discovering items 1994
+[00:13:30] [Server thread/INFO] [minecolonies/]: Finished discovering compostables 233
+[00:13:30] [Server thread/INFO] [minecraft/GameTestServer]: 8 tests are now running at position -1408957, -59, -5219702!
+[00:13:30] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'cult_lifecycle:0' (1 tests)...
+[00:13:30] [Server thread/INFO] [minecraft/GameTestServer]: [        ]
+[00:13:30] [Server thread/INFO] [minecraft/GameTestServer]: [        ]
+[00:13:30] [Server thread/WARN] [minecolonies/]: Adding fakeplayer as important subscriber: this should not happen
+java.lang.Exception: null
+	at TRANSFORMER/minecolonies@1.1.1343-1.21.1-snapshot/com.minecolonies.core.colony.managers.ColonyPackageManager.addImportantColonyPlayer(ColonyPackageManager.java:295) ~[minecolonies-1.1.1343-1.21.1-snapshot.jar%23128!/:1.1.1343-1.21.1-snapshot] {re:classloading}
+	at TRANSFORMER/minecolonies@1.1.1343-1.21.1-snapshot/com.minecolonies.core.colony.ColonyManager.createColony(ColonyManager.java:128) ~[minecolonies-1.1.1343-1.21.1-snapshot.jar%23128!/:1.1.1343-1.21.1-snapshot] {re:classloading}
+	at TRANSFORMER/minecolonies_cult@0.2.0/com.kingdomsgate.cult.gametest.CultLifecycleGameTests.recruitmentAndRitualCleanup(CultLifecycleGameTests.java:31) ~[%23127!/:?] {re:classloading}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestRegistry.lambda$turnMethodIntoConsumer$5(GameTestRegistry.java:157) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.TestFunction.run(TestFunction.java:40) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.startTest(GameTestInfo.java:162) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tickInternal(GameTestInfo.java:124) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tick(GameTestInfo.java:107) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.lambda$tick$0(GameTestTicker.java:39) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at java.base/java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:891) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.tick(GameTestTicker.java:39) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1055) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:917) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestServer.tickServer(GameTestServer.java:168) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:707) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?] {}
+[00:13:30] [Server thread/WARN] [minecolonies/]: Adding fakeplayer as subscriber: this should not happen
+java.lang.Exception: null
+	at TRANSFORMER/minecolonies@1.1.1343-1.21.1-snapshot/com.minecolonies.core.colony.managers.ColonyPackageManager.addCloseSubscriber(ColonyPackageManager.java:268) ~[minecolonies-1.1.1343-1.21.1-snapshot.jar%23128!/:1.1.1343-1.21.1-snapshot] {re:classloading}
+	at TRANSFORMER/minecolonies@1.1.1343-1.21.1-snapshot/com.minecolonies.core.colony.ColonyManager.createColony(ColonyManager.java:129) ~[minecolonies-1.1.1343-1.21.1-snapshot.jar%23128!/:1.1.1343-1.21.1-snapshot] {re:classloading}
+	at TRANSFORMER/minecolonies_cult@0.2.0/com.kingdomsgate.cult.gametest.CultLifecycleGameTests.recruitmentAndRitualCleanup(CultLifecycleGameTests.java:31) ~[%23127!/:?] {re:classloading}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestRegistry.lambda$turnMethodIntoConsumer$5(GameTestRegistry.java:157) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.TestFunction.run(TestFunction.java:40) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.startTest(GameTestInfo.java:162) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tickInternal(GameTestInfo.java:124) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tick(GameTestInfo.java:107) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.lambda$tick$0(GameTestTicker.java:39) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at java.base/java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:891) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.tick(GameTestTicker.java:39) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1055) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:917) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestServer.tickServer(GameTestServer.java:168) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:707) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?] {}
+[00:13:30] [Server thread/INFO] [minecolonies/]: New Colony Id: 1 by [Minecraft]
+[00:13:30] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:30] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:30] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:30] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:30] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:30] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [_       ]
+[00:13:31] [Server thread/INFO] [minecolonies/]: Removing citizens for 1
+[00:13:31] [Server thread/INFO] [minecolonies/]: Kill Citizen Finnley M. Greenway
+[00:13:31] [Server thread/INFO] [minecolonies/]: Kill Citizen Franco V. Kolanowski
+[00:13:31] [Server thread/INFO] [minecolonies/]: Kill Citizen Mariana K. Asger
+[00:13:31] [Server thread/INFO] [minecolonies/]: Removing buildings for 1
+[00:13:31] [Server thread/INFO] [minecolonies/]: Delete Building at BlockPos{x=-1408955, y=-59, z=-5219700}
+[00:13:31] [Server thread/INFO] [minecolonies/]: Colony 1 - removed AbstractBuilding BlockPos{x=-1408955, y=-59, z=-5219700} of type kingdoms_gate
+[00:13:31] [Server thread/INFO] [minecolonies/]: Found Block, deleting Block{minecolonies_cult:kingdoms_gate}
+[00:13:31] [Server thread/INFO] [minecolonies/]: Deleting colony: 1
+[00:13:31] [Server thread/INFO] [minecolonies/]: Successfully deleted colony: 1
+[00:13:31] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'defaultBatch:0' (6 tests)...
+[00:13:31] [Server thread/INFO] [minecraft/GameTestServer]: [+       ]
+[00:13:32] [Server thread/WARN] [minecolonies/]: Adding fakeplayer as important subscriber: this should not happen
+java.lang.Exception: null
+	at TRANSFORMER/minecolonies@1.1.1343-1.21.1-snapshot/com.minecolonies.core.colony.managers.ColonyPackageManager.addImportantColonyPlayer(ColonyPackageManager.java:295) ~[minecolonies-1.1.1343-1.21.1-snapshot.jar%23128!/:1.1.1343-1.21.1-snapshot] {re:classloading}
+	at TRANSFORMER/minecolonies@1.1.1343-1.21.1-snapshot/com.minecolonies.core.colony.ColonyManager.createColony(ColonyManager.java:128) ~[minecolonies-1.1.1343-1.21.1-snapshot.jar%23128!/:1.1.1343-1.21.1-snapshot] {re:classloading}
+	at TRANSFORMER/minecolonies_cult@0.2.0/com.kingdomsgate.cult.gametest.CultGameTests.buildingHiringAndNativeHappiness(CultGameTests.java:37) ~[%23127!/:?] {re:classloading}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestRegistry.lambda$turnMethodIntoConsumer$5(GameTestRegistry.java:157) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.TestFunction.run(TestFunction.java:40) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.startTest(GameTestInfo.java:162) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tickInternal(GameTestInfo.java:124) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tick(GameTestInfo.java:107) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.lambda$tick$0(GameTestTicker.java:39) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at java.base/java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:891) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.tick(GameTestTicker.java:39) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1055) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:917) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestServer.tickServer(GameTestServer.java:168) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:707) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?] {}
+[00:13:32] [Server thread/WARN] [minecolonies/]: Adding fakeplayer as subscriber: this should not happen
+java.lang.Exception: null
+	at TRANSFORMER/minecolonies@1.1.1343-1.21.1-snapshot/com.minecolonies.core.colony.managers.ColonyPackageManager.addCloseSubscriber(ColonyPackageManager.java:268) ~[minecolonies-1.1.1343-1.21.1-snapshot.jar%23128!/:1.1.1343-1.21.1-snapshot] {re:classloading}
+	at TRANSFORMER/minecolonies@1.1.1343-1.21.1-snapshot/com.minecolonies.core.colony.ColonyManager.createColony(ColonyManager.java:129) ~[minecolonies-1.1.1343-1.21.1-snapshot.jar%23128!/:1.1.1343-1.21.1-snapshot] {re:classloading}
+	at TRANSFORMER/minecolonies_cult@0.2.0/com.kingdomsgate.cult.gametest.CultGameTests.buildingHiringAndNativeHappiness(CultGameTests.java:37) ~[%23127!/:?] {re:classloading}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestRegistry.lambda$turnMethodIntoConsumer$5(GameTestRegistry.java:157) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.TestFunction.run(TestFunction.java:40) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.startTest(GameTestInfo.java:162) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tickInternal(GameTestInfo.java:124) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tick(GameTestInfo.java:107) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.lambda$tick$0(GameTestTicker.java:39) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at java.base/java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:891) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.tick(GameTestTicker.java:39) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1055) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:917) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestServer.tickServer(GameTestServer.java:168) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:707) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?] {}
+[00:13:32] [Server thread/INFO] [minecolonies/]: New Colony Id: 1 by [Minecraft]
+[00:13:32] [Server thread/INFO] [minecolonies/]: Removing citizens for 1
+[00:13:32] [Server thread/INFO] [minecolonies/]: Kill Citizen Giovanna S. Andrews
+[00:13:32] [Server thread/INFO] [minecolonies/]: Removing buildings for 1
+[00:13:32] [Server thread/INFO] [minecolonies/]: Delete Building at BlockPos{x=-1408895, y=-59, z=-5219700}
+[00:13:32] [Server thread/INFO] [minecolonies/]: Colony 1 - removed AbstractBuilding BlockPos{x=-1408895, y=-59, z=-5219700} of type kingdoms_gate
+[00:13:32] [Server thread/INFO] [minecolonies/]: Found Block, deleting Block{minecolonies_cult:kingdoms_gate}
+[00:13:32] [Server thread/INFO] [minecolonies/]: Deleting colony: 1
+[00:13:32] [Server thread/INFO] [minecolonies/]: Successfully deleted colony: 1
+[00:13:32] [Server thread/INFO] [minecraft/GameTestRunner]: Running test batch 'cult_capacity:0' (1 tests)...
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++ ]
+[00:13:32] [Server thread/WARN] [minecolonies/]: Adding fakeplayer as important subscriber: this should not happen
+java.lang.Exception: null
+	at TRANSFORMER/minecolonies@1.1.1343-1.21.1-snapshot/com.minecolonies.core.colony.managers.ColonyPackageManager.addImportantColonyPlayer(ColonyPackageManager.java:295) ~[minecolonies-1.1.1343-1.21.1-snapshot.jar%23128!/:1.1.1343-1.21.1-snapshot] {re:classloading}
+	at TRANSFORMER/minecolonies@1.1.1343-1.21.1-snapshot/com.minecolonies.core.colony.ColonyManager.createColony(ColonyManager.java:128) ~[minecolonies-1.1.1343-1.21.1-snapshot.jar%23128!/:1.1.1343-1.21.1-snapshot] {re:classloading}
+	at TRANSFORMER/minecolonies_cult@0.2.0/com.kingdomsgate.cult.gametest.CultCapacityGameTests.fullGateUpgradeAndUniqueCeremonyPlaces(CultCapacityGameTests.java:40) ~[%23127!/:?] {re:classloading}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestRegistry.lambda$turnMethodIntoConsumer$5(GameTestRegistry.java:157) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.TestFunction.run(TestFunction.java:40) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.startTest(GameTestInfo.java:162) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tickInternal(GameTestInfo.java:124) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tick(GameTestInfo.java:107) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.lambda$tick$0(GameTestTicker.java:39) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at java.base/java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:891) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.tick(GameTestTicker.java:39) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1055) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:917) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestServer.tickServer(GameTestServer.java:168) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:707) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?] {}
+[00:13:32] [Server thread/WARN] [minecolonies/]: Adding fakeplayer as subscriber: this should not happen
+java.lang.Exception: null
+	at TRANSFORMER/minecolonies@1.1.1343-1.21.1-snapshot/com.minecolonies.core.colony.managers.ColonyPackageManager.addCloseSubscriber(ColonyPackageManager.java:268) ~[minecolonies-1.1.1343-1.21.1-snapshot.jar%23128!/:1.1.1343-1.21.1-snapshot] {re:classloading}
+	at TRANSFORMER/minecolonies@1.1.1343-1.21.1-snapshot/com.minecolonies.core.colony.ColonyManager.createColony(ColonyManager.java:129) ~[minecolonies-1.1.1343-1.21.1-snapshot.jar%23128!/:1.1.1343-1.21.1-snapshot] {re:classloading}
+	at TRANSFORMER/minecolonies_cult@0.2.0/com.kingdomsgate.cult.gametest.CultCapacityGameTests.fullGateUpgradeAndUniqueCeremonyPlaces(CultCapacityGameTests.java:40) ~[%23127!/:?] {re:classloading}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestRegistry.lambda$turnMethodIntoConsumer$5(GameTestRegistry.java:157) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.TestFunction.run(TestFunction.java:40) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.startTest(GameTestInfo.java:162) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tickInternal(GameTestInfo.java:124) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestInfo.tick(GameTestInfo.java:107) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.lambda$tick$0(GameTestTicker.java:39) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at java.base/java.util.concurrent.CopyOnWriteArrayList.forEach(CopyOnWriteArrayList.java:891) ~[?:?] {}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestTicker.tick(GameTestTicker.java:39) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickChildren(MinecraftServer.java:1055) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.tickServer(MinecraftServer.java:917) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.gametest.framework.GameTestServer.tickServer(GameTestServer.java:168) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:707) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.MinecraftServer.lambda$spin$2(MinecraftServer.java:267) ~[neoforge-21.1.218.jar%23125!/:?] {re:classloading,pl:accesstransformer:B}
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?] {}
+[00:13:32] [Server thread/INFO] [minecolonies/]: New Colony Id: 1 by [Minecraft]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [+++++++_]
+[00:13:32] [Server thread/INFO] [minecolonies/]: Removing citizens for 1
+[00:13:32] [Server thread/INFO] [minecolonies/]: Kill Citizen Jameson C. Cobley
+[00:13:32] [Server thread/INFO] [minecolonies/]: Kill Citizen Lee B. Wallgreen
+[00:13:32] [Server thread/INFO] [minecolonies/]: Kill Citizen Mason X. Covert
+[00:13:32] [Server thread/INFO] [minecolonies/]: Kill Citizen Vance H. Colt
+[00:13:32] [Server thread/INFO] [minecolonies/]: Kill Citizen Enrique N. Ashenhurst
+[00:13:32] [Server thread/INFO] [minecolonies/]: Kill Citizen Ezekiel F. Goodenouth
+[00:13:32] [Server thread/INFO] [minecolonies/]: Removing buildings for 1
+[00:13:32] [Server thread/INFO] [minecolonies/]: Delete Building at BlockPos{x=-1408885, y=-59, z=-5219700}
+[00:13:32] [Server thread/INFO] [minecolonies/]: Colony 1 - removed AbstractBuilding BlockPos{x=-1408885, y=-59, z=-5219700} of type kingdoms_gate
+[00:13:32] [Server thread/INFO] [minecolonies/]: Found Block, deleting Block{minecolonies_cult:kingdoms_gate}
+[00:13:32] [Server thread/INFO] [minecolonies/]: Deleting colony: 1
+[00:13:32] [Server thread/INFO] [minecolonies/]: Successfully deleted colony: 1
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: [++++++++]
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: ========= 8 GAME TESTS COMPLETE IN 2.370 s ======================
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: All 8 required tests passed :)
+[00:13:32] [Server thread/INFO] [minecraft/GameTestServer]: ====================================================
+[00:13:32] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
+[00:13:32] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
+[00:13:32] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
+[00:13:32] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:overworld
+[00:13:33] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_nether
+[00:13:33] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[Test Level]'/minecraft:the_end
+[00:13:33] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[00:13:33] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[00:13:33] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[00:13:33] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved
+[00:13:33] [Server thread/INFO] [minecraft/GameTestServer]: Game test server shutting down
+
+[Incubating] Problems report is available at: file:///Users/oberon/Projects/coding/mods/minecraft/minecolonies-cult/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 15s
+8 actionable tasks: 3 executed, 5 up-to-date
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.2.1/userguide/configuration_cache_enabling.html

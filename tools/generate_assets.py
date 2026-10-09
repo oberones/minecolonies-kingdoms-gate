@@ -7,7 +7,6 @@ import gzip
 from collections import deque
 import hashlib
 import json
-import math
 from pathlib import Path
 import struct
 import zlib
@@ -80,84 +79,89 @@ def textures():
     png(ART/'textures/entity/cult_leader.png',128,64,skin)
 
 def blueprint(level):
-    sx, sy, sz = 29, 24, 35
-    anchor=(14,1,3)
-    blocks={}
+    sx, sy, sz = {1:(9,10,13), 2:(13,14,17), 3:(17,18,23), 4:(23,22,29), 5:(29,24,35)}[level]
+    capacity = {1:4, 2:8, 3:16, 4:24, 5:32}[level]
+    center = sx // 2
+    anchor = (center,1,3)
+    blocks = {}
     def put(x,y,z,name,**properties):
-        assert 0<=x<sx and 0<=y<sy and 0<=z<sz
+        assert 0<=x<sx and 0<=y<sy and 0<=z<sz, (level,x,y,z)
         blocks[(x,y,z)] = {'Name':s(name if ':' in name else 'minecraft:'+name)}
         if properties: blocks[(x,y,z)]['Properties']=compound({key:s(str(value)) for key,value in properties.items()})
     def line(x0,y0,z0,x1,y1,z1,name,**props):
         for y in range(y0,y1+1):
             for z in range(z0,z1+1):
                 for x in range(x0,x1+1): put(x,y,z,name,**props)
-    # Constant footprint and anchor permit safe upgrades without moving the congregation area.
-    for x in range(1,28):
-        for z in range(1,34):
-            put(x,0,z,'stone_bricks' if (x+z)%5 else 'cracked_stone_bricks')
-            if 13<=x<=15:put(x,0,z,'purple_wool')
-            radius=math.hypot(x-14,z-17)
-            if 5<radius<6:put(x,0,z,'chiseled_stone_bricks' if level<4 else 'polished_deepslate')
-    left={1:7,2:5,3:4,4:3,5:3}[level]; right=28-left
-    front=10 if level==1 else 7; back=29; wall=3+level
-    masonry='dark_oak_planks' if level==1 else ('stone_bricks' if level<4 else 'deepslate_bricks')
+    # The hut remains at the same world position; each tier expands sideways and rearward.
+    for x in range(1,sx-1):
+        for z in range(1,sz-1):
+            material = 'dark_oak_planks' if level == 1 else ('stone_bricks' if (x+z)%5 else 'cracked_stone_bricks')
+            if x == center: material = 'purple_wool'
+            put(x,0,z,material)
+    left = 2 if level < 4 else 3
+    right = sx-1-left
+    front = 4 if level < 3 else (5 if level == 3 else 7)
+    back = sz-2
+    wall = 3+level
+    masonry = 'dark_oak_planks' if level == 1 else ('stone_bricks' if level < 4 else 'deepslate_bricks')
     for x in range(left,right+1):
         for z in range(front,back+1):
             if x in (left,right) or z in (front,back):
                 for y in range(1,wall+1):
-                    if z==front and 12<=x<=16 and y<=3:continue
-                    material='dark_oak_log' if (x in (left,right) and z%5==0) else masonry
-                    if x in (left,right) and z%5 in (2,3) and 2<=y<=wall-1:material='purple_stained_glass'
-                    if z==back and 12<=x<=16 and 3<=y<=wall-1:material='purple_stained_glass'
+                    if z == front and abs(x-center) <= 1 and y <= 3: continue
+                    material = 'dark_oak_log' if x in (left,right) and z%5 == 0 else masonry
+                    if x in (left,right) and z%5 in (2,3) and 2 <= y <= wall-1: material = 'purple_stained_glass'
+                    if z == back and abs(x-center) <= 1 and 3 <= y <= wall-1: material = 'purple_stained_glass'
                     put(x,y,z,material)
-    # Steep gable roof, overhanging eaves, stone front gable and repeated exterior buttresses.
     for x in range(left-1,right+2):
-        roof_y=wall+1+min(x-(left-1),(right+1)-x)
-        for z in range(front-1,back+2):put(x,roof_y,z,'dark_oak_planks' if level<3 else 'deepslate_tiles')
-        if front<=back:
-            for y in range(wall+1,roof_y):
-                put(x,y,front,masonry); put(x,y,back,masonry)
-    if level>=2:
+        roof_y = wall+1+min(x-(left-1),(right+1)-x)
+        for z in range(front-1,back+1): put(x,roof_y,z,'dark_oak_planks' if level < 3 else 'deepslate_tiles')
+        for y in range(wall+1,roof_y):
+            put(x,y,front,masonry); put(x,y,back,masonry)
+    if level >= 2:
         for x in (left-1,right+1):
             for z in range(front+2,back,5):
-                line(x,1,z,x,wall-1,z,'stone_bricks' if level<4 else 'polished_deepslate')
-    # A free-standing ceremonial arch faces the congregation; focus remains clear of collision.
-    arch_z=25; arch_top=5+level
-    for x in (11,17):line(x,1,arch_z,x,arch_top-2,arch_z,'chiseled_stone_bricks' if level<3 else 'polished_deepslate')
-    for x in range(11,18):put(x,arch_top-abs(x-14)//2,arch_z,'stone_bricks' if level<3 else 'amethyst_block')
-    for x in (10,18):
-        put(x,1,24,'purple_candle',candles='3',lit='true',waterlogged='false')
-    for z in range(front+3,back,5):
-        for x in (left+1,right-1):put(x,1,z,'lantern',hanging='false',waterlogged='false')
-    if level>=3:
-        for x in (left+1,right-1):
-            for z in (front+1,back-1):line(x,1,z,x,2,z,'chiseled_stone_bricks')
-    if level==5:
-        for cx in (4,24):
+                line(x,1,z,x,wall-1,z,'stone_bricks' if level < 4 else 'polished_deepslate')
+    arch_z = sz-4
+    arch_half = 1 if level == 1 else (2 if level == 2 else 3)
+    arch_top = 3+level
+    for x in (center-arch_half,center+arch_half):
+        line(x,1,arch_z,x,arch_top-1,arch_z,'dark_oak_log' if level == 1 else 'chiseled_stone_bricks')
+    for x in range(center-arch_half,center+arch_half+1):
+        put(x,arch_top-abs(x-center)//2,arch_z,'dark_oak_planks' if level == 1 else ('stone_bricks' if level < 3 else 'amethyst_block'))
+    # Rear lights leave the center aisle and the reserved standing positions clear.
+    for x in (left+1,right-1): put(x,1,back-1,'lantern',hanging='false',waterlogged='false')
+    if level == 5:
+        for cx in (4,sx-5):
             for y in range(1,19):
                 for x in range(cx-2,cx+3):
                     for z in range(2,7):
-                        if x in (cx-2,cx+2) or z in (2,6):put(x,y,z,'deepslate_bricks' if y%4 else 'polished_deepslate')
-            for d in range(3):line(cx-2+d,19+d,2+d,cx+2-d,19+d,6-d,'deepslate_tiles')
+                        if x in (cx-2,cx+2) or z in (2,6): put(x,y,z,'deepslate_bricks' if y%4 else 'polished_deepslate')
+            for d in range(3): line(cx-2+d,19+d,2+d,cx+2-d,19+d,6-d,'deepslate_tiles')
     put(*anchor,'minecolonies_cult:kingdoms_gate',facing='north')
-    # Every marked slot is a clear, supported standing position in the hall/courtyard.
-    # Flood-fill from the public entrance; sealed tower interiors must never become gathering slots.
-    reachable={(14,1)}; queue=deque(reachable)
+    # Prove every selected position has an entrance-connected, two-block-high route.
+    reachable = {(center,1)}
+    queue = deque(reachable)
     while queue:
-        x,z=queue.popleft()
+        x,z = queue.popleft()
         for nx,nz in ((x-1,z),(x+1,z),(x,z-1),(x,z+1)):
             if (nx,nz) not in reachable and (nx,0,nz) in blocks and (nx,1,nz) not in blocks and (nx,2,nz) not in blocks:
                 reachable.add((nx,nz)); queue.append((nx,nz))
-    slots=[]
-    for z in range(5,24):
-        for x in range(2,27):
-            if (x,z) in reachable:slots.append((x,1,z))
+    leader_slot = (center,1,arch_z-1)
+    columns = sorted(x for x in range(left+1,right) if abs(x-center)%2 == 1)
+    candidates = [(x,1,z) for z in range(front+1,arch_z-1,2) for x in columns if (x,z) in reachable]
+    assert len(candidates) >= capacity, (level,len(candidates),capacity)
+    slots = candidates[:capacity] + [leader_slot]
+    assert len(set(slots)) == capacity+1
+    assert all((x,z) in reachable for x,y,z in slots)
+    assert (center,arch_z) in reachable
     tags=[]
     for x,y,z in slots:
-        tags.append({'tagPos':position(x-anchor[0],y-anchor[1],z-anchor[2]),'tagNameList':listing(10,[{'tagName':s('cult_gather')}])})
+        tags.append({'tagPos':position(x-anchor[0],y-anchor[1],z-anchor[2]),'tagNameList':listing(10,[{'tagName':s(tag)} for tag in (['cult_gather','cult_leader_gather'] if (x,y,z) == leader_slot else ['cult_gather'])])})
+    tags.append({'tagPos':position(0,0,-2),'tagNameList':listing(10,[{'tagName':s('cult_entrance')}])})
     tags.append({'tagPos':position(0,0,arch_z-anchor[2]),'tagNameList':listing(10,[{'tagName':s('cult_focus')}])})
-    provider={'schematicName':s('kingdoms_gate'+str(level)), 'corner1':position(-14,-1,-3),
-              'corner2':position(14,22,31), 'posTagMap':listing(10,tags), 'pack':s('Kingdom\'s Gate'),
+    provider={'schematicName':s('kingdoms_gate'+str(level)), 'corner1':position(-center,-1,-3),
+              'corner2':position(sx-1-center,sy-2,sz-4), 'posTagMap':listing(10,tags), 'pack':s('Kingdom\'s Gate'),
               'path':s('mysticism/kingdoms_gate'+str(level)+'.blueprint')}
     tile={'id':s('minecolonies_cult:kingdoms_gate'),'x':i(anchor[0]),'y':i(anchor[1]),'z':i(anchor[2]),
           'blueprintDataProvider':compound(provider), 'registryName':s('minecolonies_cult:kingdoms_gate')}
@@ -175,13 +179,13 @@ def blueprint(level):
             'name':s('kingdoms_gate'+str(level)), 'architects':listing(8,['Kingdom\'s Gate contributors']),
             'mcversion':i(3955), 'optional_data':compound({'structurize':compound({'primary_offset':position(*anchor)})})}
     path=PACK/'mysticism'/f'kingdoms_gate{level}.blueprint'; nbt(path,result)
-    return {'level':level,'dimensions':[sx,sy,sz],'anchor':anchor,'gatheringSlots':len(slots),'blocks':len(blocks),
+    return {'level':level,'dimensions':[sx,sy,sz],'anchor':anchor,'recruitCapacity':capacity,'gatheringSlots':len(slots),'blocks':len(blocks),
             'sha256':hashlib.sha256(path.read_bytes()).hexdigest()}
 
 def main():
     textures()
     PACK.mkdir(parents=True,exist_ok=True)
-    (PACK/'pack.json').write_text(json.dumps({'version':1,'pack-format':1,'name':"Kingdom's Gate",'desc':'A gothic congregation hall, growing from a timber chapel into a twin-spired sanctuary.',
+    (PACK/'pack.json').write_text(json.dumps({'version':2,'pack-format':1,'name':"Kingdom's Gate",'desc':'A gothic congregation hall, growing from a timber chapel into a twin-spired sanctuary.',
         'authors':["Kingdom's Gate contributors"],'mods':['minecolonies','structurize','minecolonies_cult'],'icon':'kingdoms_gate.png'},indent=2)+'\n')
     proof=[blueprint(level) for level in range(1,6)]
     (ROOT/'assets').mkdir(exist_ok=True)

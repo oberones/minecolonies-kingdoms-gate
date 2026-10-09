@@ -1,0 +1,11 @@
+{
+  "version": "0.2.0",
+  "jar": "build/libs/minecolonies-cult-0.2.0.jar",
+  "sha256": "0e60703b3b0a4a00a759e9691efbcc6018287101e93de55f5c09c1797612b33d",
+  "unitTests": 14,
+  "minimalGameTests": 8,
+  "modpackGameTests": 8,
+  "blueprintOrientations": 40,
+  "generatedFilesCompared": 12,
+  "interactiveAcceptance": "OPEN: computer-use surface cannot attach to Java game window"
+}

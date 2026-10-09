@@ -88,7 +88,8 @@ public final class CultLifecycleGameTests {
                                 + "; listener sick=" + listener.getCitizenDiseaseHandler().isSick() + "; listener hurt=" + listener.getCitizenDiseaseHandler().isHurt()
                                 + "; rain=" + level.isRaining() + "; raid=" + colony.getRaiderManager().isRaided()
                                 + "; loaded=" + level.hasChunkAt(speaker.blockPosition()) + "; time=" + level.getDayTime()
-                                + "; LOS=" + speaker.hasLineOfSight(hearer) + "; saturation=" + leader.getSaturation());
+                                + "; LOS=" + speaker.hasLineOfSight(hearer) + "; saturation=" + leader.getSaturation()
+                                + "; capacity=" + state.recruitCapacity() + "; saved=" + state.snapshot());
                 helper.assertTrue(state.progress(child.getUUID()) == 0, "Children never recruited");
             });
         }
@@ -102,7 +103,9 @@ public final class CultLifecycleGameTests {
                     + CultService.state(colony).nextRitualDay() + "; day=" + level.getDayTime()/24000);
             helper.assertTrue(hearer.getCitizenAI().getState() == RitualState.RITUAL, "Native citizen AI enters ritual state");
             helper.assertTrue(!hearer.getCitizenSleepHandler().isAsleep(), "Native wake handler releases sleeping citizen");
-            var slots = gate.getLocationsFromTag("cult_gather").stream().sorted(java.util.Comparator.comparingLong(BlockPos::asLong)).toList();
+            var leaderSlots = gate.getLocationsFromTag("cult_leader_gather");
+            var slots = gate.getLocationsFromTag("cult_gather").stream().sorted(java.util.Comparator.<BlockPos>comparingInt(p -> leaderSlots.contains(p) ? 0 : 1)
+                    .thenComparingLong(BlockPos::asLong)).toList();
             speaker.setPos(slots.get(0).getX()+.5, slots.get(0).getY(), slots.get(0).getZ()+.5);
             hearer.setPos(slots.get(1).getX()+.5, slots.get(1).getY(), slots.get(1).getZ()+.5);
             level.setDayTime((startDay + 7) * 24000 + 18000);

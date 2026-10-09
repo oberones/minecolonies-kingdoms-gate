@@ -11,4 +11,15 @@ public record CultRules(int speeches, int graceDays, int ritualDays, int baseRad
     }
     public int radius(int level) { return baseRadius + radiusPerLevel * (Math.clamp(level, 1, 5) - 1); }
     public double factor(int level) { return level <= 0 ? 1 : baseFactor + factorPerLevel * (Math.clamp(level, 1, 5) - 1); }
+    /** Completed building levels reserve these recruit places in addition to one leader. */
+    public static int capacity(int level) {
+        return switch (level) {
+            case 1 -> 4;
+            case 2 -> 8;
+            case 3 -> 16;
+            case 4 -> 24;
+            case 5 -> 32;
+            default -> 0;
+        };
+    }
 }

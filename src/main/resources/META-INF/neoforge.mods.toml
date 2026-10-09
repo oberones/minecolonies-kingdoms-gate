@@ -4,7 +4,7 @@ license="GPL-3.0-only"
 
 [[mods]]
 modId="minecolonies_cult"
-version="0.1.0"
+version="0.2.0"
 displayName="MineColonies: Kingdom's Gate"
 authors="Kingdom's Gate contributors"
 description='''A Cult Leader, a gothic Kingdom's Gate, and midnight colony ceremonies.'''

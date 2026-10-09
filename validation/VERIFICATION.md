@@ -1,4 +1,52 @@
-# Verification record — 2026-10-08 (America/New_York)
+# Verification record — 0.2.0 growth update
+
+**2026-10-09 (America/New_York): build and automated checks passed; interactive gameplay acceptance remains OPEN.**
+
+The delivered artifact is `build/libs/minecolonies-cult-0.2.0.jar`, SHA-256 `0e60703b3b0a4a00a759e9691efbcc6018287101e93de55f5c09c1797612b33d`. Its runtime classes, version metadata, structure-pack version 2, and all five packaged blueprint checksums were inspected. Client and server must use this same build. Reference installations and player saves were not modified; no commit, tag, or publication was performed.
+
+## Growth-update automated evidence
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Gradle build and reference dependency verification | Pass | `evidence/growth-0.2.0/modpack-server.txt` |
+| JUnit domain tests | 14 passed, zero failures | Both `TEST-*.xml` files in `evidence/growth-0.2.0/` |
+| Minimal dependency GameTest server | All 8 required tests passed | `evidence/growth-0.2.0/minimal-server.txt` |
+| Copied 134-mod GameTest server | All 8 required tests passed with documented headless adjustments | `evidence/growth-0.2.0/modpack-server.txt` |
+| Blueprints | Native reader, correct growing dimensions/corners, fixed world alignment, supported entrance-connected slots; all 40 level/orientation combinations passed | `fiveBlueprintsAndEveryOrientation` in both servers |
+| Asset regeneration | All 12 generated files match two isolated regenerations byte-for-byte | `evidence/growth-0.2.0/asset-reproduction.json` |
+| Minimal client startup | Resources and sound engine initialized with no addon startup failure | `evidence/growth-0.2.0/client-startup.txt` |
+| Generated architectural preview | Inspected footprints and growth in a render of the generated block data | `evidence/growth-blueprints.png`; this is **not** an in-game screenshot |
+
+New checks cover all recruit limits, final-place contention in stable citizen-ID order, paused progress, vacancies and completed upgrades, role-only versus permanent leadership, overfull retention, v1 migration/v2 round trips, shared client/server status decoding, and capacity-limited ceremonies with separate standing positions. A native pending upgrade work order does not unlock capacity; completion does. Role loss cancels attendance and removes only temporary membership benefits.
+
+The entity fixtures deliberately disable free movement, accelerate time, seed five prior speech credits in the capacity test, and position actors at known ceremony slots. They exercise the real MineColonies citizen/job/AI and building APIs, but do not establish builder construction or natural navigation. The preparation script excludes previously installed `minecolonies-cult-*.jar` files because Gradle supplies the addon under test; all 134 reference dependency filenames/checksums still match the pinned manifest. Existing upstream modpack warnings and the documented chunk-loading overrides described below still apply.
+
+Earlier runs exposed fixture spawning/metadata/hiring issues and interference from retained test worlds; they were corrected before the passing runs above. Previous disposable worlds were moved under `.tools/` instead of deleted. The runtime also now replaces transient state when a colony ID is reused by a different native colony object. Repository ignore rules were narrowed to root-level `/run*/` so the previously ignored Java `runtime/` package is included in source changes.
+
+Reproduce from disposable test worlds (archive an existing `run-gametest/world` or `run-modpack-gametest/world` before a fresh run):
+
+```sh
+python3 tools/prepare_modpack_test.py --server --headless-adjustments
+GRADLE_USER_HOME="$PWD/.gradle-home" ./gradlew build runGameTestServer runModpackGameTestServer --offline --console=plain
+```
+
+Use `--offline` only after dependencies and game assets are cached. The passing minimal-server and full-modpack executions were separate invocations recorded in the evidence files.
+
+## Growth-update interactive acceptance — OPEN
+
+The development client launched, but the available computer-use inventory did not expose its Java window, and `cua.getApp('java')` returned `Invalid app: java`. The client was closed after startup verification. No world was opened through the UI, and no in-game appearance, construction, or navigation result is claimed.
+
+- [ ] In disposable worlds, build each level with a real builder, checking expansion space, material requests, roof/entrance clearance, and all rotations/mirrors. Confirm the hut stays fixed.
+- [ ] Fill level one with four recruits plus the leader. Inspect full/over-capacity, leader, progress, inactive, and grace labels, including long names. Queue an upgrade, then observe completion and resumed recruitment.
+- [ ] Observe natural gathering and departure at each capacity. Block gathering positions, replace the leader, and confirm no crowding or stuck AI.
+- [ ] Load a backup-derived v1 test world, preserve overfull membership/progress, dismiss a role-only leader, and perform a full client/server restart. Install matching 0.2.0 builds on both sides for this check.
+- [ ] Repair/upgrade an old large Gate to a new smaller early-tier design and inspect remaining blocks outside the new bounds before manual cleanup.
+
+The earlier interactive checklist below remains open as well. This artifact is an automated-verified test build, not completed interactive or release acceptance.
+
+---
+
+## Historical initial-build verification — 2026-10-08 (America/New_York)
 
 **Initial test build: automated verification passed; interactive gameplay acceptance remains open.**
 

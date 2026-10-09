@@ -6,10 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CultStateTest {
     private final UUID citizen = UUID.randomUUID();
+    private final UUID leader = UUID.randomUUID();
     private final CultRules rules = CultRules.defaults();
 
     @Test void conversionRequiresSixDistinctDaysAndDoesNotRepeat() {
         CultState state = new CultState();
+        state.observe(0, 1, leader, rules);
         for (int day = 0; day < 5; day++) {
             assertTrue(state.hear(citizen, day, rules));
             assertFalse(state.hear(citizen, day, rules));
@@ -23,20 +25,20 @@ class CultStateTest {
 
     @Test void faithExpiresOnlyAfterFullGraceAndRestorationCancelsExpiry() {
         CultState state = new CultState();
-        state.observe(100, 3, rules);
-        state.enrollLeader(citizen, 0, rules);
-        state.observe(200, 0, rules);
-        state.observe(200 + 7 * 24000 - 1, 0, rules);
+        state.observe(100, 3, leader, rules);
+        for (int day = 0; day < 6; day++) state.hear(citizen, day, rules);
+        state.observe(200, 0, leader, rules);
+        state.observe(200 + 7 * 24000 - 1, 0, leader, rules);
         assertTrue(state.isMember(citizen));
         assertEquals(3, state.bonusLevel());
-        state.observe(200 + 7 * 24000, 0, rules);
+        state.observe(200 + 7 * 24000, 0, leader, rules);
         assertFalse(state.isMember(citizen));
         assertEquals(0, state.progress(citizen));
-        state.observe(200000, 1, rules);
-        state.enrollLeader(citizen, 8, rules);
-        state.observe(201000, 0, rules);
-        state.observe(202000, 5, rules);
-        state.observe(500000, 5, rules);
+        state.observe(200000, 1, leader, rules);
+        for (int day = 0; day < 6; day++) state.hear(citizen, day, rules);
+        state.observe(201000, 0, leader, rules);
+        state.observe(202000, 5, leader, rules);
+        state.observe(500000, 5, leader, rules);
         assertTrue(state.isMember(citizen));
         assertEquals(-1, state.graceDeadline(rules));
         assertEquals(5, state.bonusLevel());
@@ -44,7 +46,7 @@ class CultStateTest {
 
     @Test void ritualIsConsumedBeforeStartAndMissedWeeksNeverReplay() {
         CultState state = new CultState();
-        state.observe(0, 1, rules);
+        state.observe(0, 1, leader, rules);
         assertEquals(7, state.nextRitualDay());
         assertFalse(state.consumeRitual(7 * 24000 + 15999, rules));
         assertTrue(state.consumeRitual(7 * 24000 + 16000, rules));
@@ -57,11 +59,11 @@ class CultStateTest {
 
     @Test void backwardsTimeDoesNotRepeatRecruitmentOrExtendGrace() {
         CultState state = new CultState();
-        state.observe(240000, 1, rules);
+        state.observe(240000, 1, leader, rules);
         state.hear(citizen, state.day(), rules);
-        state.observe(240100, 0, rules);
+        state.observe(240100, 0, leader, rules);
         long deadline = state.graceDeadline(rules);
-        state.observe(0, 0, rules);
+        state.observe(0, 0, leader, rules);
         assertEquals(10, state.day());
         assertFalse(state.hear(citizen, state.day(), rules));
         assertEquals(deadline, state.graceDeadline(rules));
@@ -69,10 +71,10 @@ class CultStateTest {
 
     @Test void snapshotRestoresMembershipGraceAndConsumedSchedule() {
         CultState original = new CultState();
-        original.observe(0, 4, rules);
-        original.enrollLeader(citizen, 0, rules);
+        original.observe(0, 4, leader, rules);
+        for (int day = 0; day < 6; day++) original.hear(citizen, day, rules);
         original.consumeRitual(7 * 24000 + 16000, rules);
-        original.observe(7 * 24000 + 17000, 0, rules);
+        original.observe(7 * 24000 + 17000, 0, leader, rules);
         CultState restored = CultState.restore(original.snapshot());
         assertTrue(restored.isMember(citizen));
         assertFalse(restored.consumeRitual(7 * 24000 + 17500, rules));

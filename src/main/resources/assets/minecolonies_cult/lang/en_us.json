@@ -9,7 +9,7 @@
   "com.minecolonies.coremod.gui.townhall.happiness.minecolonies_cult_membership": "Cult Membership",
   "com.minecolonies.coremod.gui.townhall.happiness.desc.minecolonies_cult_membership": "Belonging to the cult brings comfort. Higher Kingdom's Gate levels strengthen this bonus. Faith fades after seven days without a functioning Gate and leader by default.",
   "minecolonies_cult.status.title": "The Congregation",
-  "minecolonies_cult.status.members": "Members: %s",
+  "minecolonies_cult.status.members": "Recruits: %s / %s",
   "minecolonies_cult.status.member": "Member of the cult",
   "minecolonies_cult.status.progress": "Heard %s / %s speeches",
   "minecolonies_cult.status.next": "Next midnight gathering: in %s days",
@@ -17,5 +17,10 @@
   "minecolonies_cult.status.grace": "Faith fades in %s days. Restore the Gate and leader.",
   "minecolonies_cult.status.active": "The Gate is open. The congregation grows.",
   "minecolonies_cult.status.inactive": "A constructed Gate needs a Cult Leader.",
-  "minecolonies_cult.status.empty": "No adult citizens yet."
+  "minecolonies_cult.status.empty": "No adult citizens yet.",
+  "minecolonies_cult.status.leader": "Leader: %s",
+  "minecolonies_cult.status.no_leader": "Leader: unassigned",
+  "minecolonies_cult.status.leader_role": "Cult Leader",
+  "minecolonies_cult.status.full": "Full. Upgrade to resume recruitment.",
+  "minecolonies_cult.status.over_capacity": "Over capacity. Members stay; recruitment paused."
 }

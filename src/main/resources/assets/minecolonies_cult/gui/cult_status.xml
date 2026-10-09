@@ -2,9 +2,10 @@
     <image source="minecolonies:textures/gui/builderhut/builder_paper.png" size="190 244"/>
     <text size="160 14" pos="15 14" textalign="MIDDLE" color="black" label="$(minecolonies_cult.status.title)"/>
     <text id="members" size="160 12" pos="15 35" color="black"/>
-    <text id="next" size="160 24" pos="15 52" color="black" wrap="true"/>
-    <text id="condition" size="160 28" pos="15 80" color="black" wrap="true"/>
-    <list id="citizens" size="158 111" pos="16 113" emptytext="$(minecolonies_cult.status.empty)" emptycolor="black">
+    <text id="leader" size="160 24" pos="15 50" color="black" wrap="true"/>
+    <text id="next" size="160 24" pos="15 77" color="black" wrap="true"/>
+    <text id="condition" size="160 36" pos="15 104" color="black" wrap="true"/>
+    <list id="citizens" size="158 78" pos="16 146" emptytext="$(minecolonies_cult.status.empty)" emptycolor="black">
         <view size="150 30">
             <text id="name" size="150 12" pos="0 0" color="black"/>
             <text id="faith" size="150 12" pos="0 14" color="#663377"/>

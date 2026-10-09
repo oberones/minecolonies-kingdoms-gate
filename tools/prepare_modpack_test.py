@@ -21,7 +21,9 @@ destination = root/('run-modpack-gametest' if args.server else 'run-modpack-clie
 (destination/'mods').mkdir(parents=True, exist_ok=True)
 baseline = {entry['file'] for entry in lock['artifacts']}
 inventory = []
-for jar in sorted((source/'mods').glob('*.jar')):
+# The addon under test comes from Gradle, never a previously installed release JAR.
+reference_jars = [jar for jar in sorted((source/'mods').glob('*.jar')) if not jar.name.startswith('minecolonies-cult-')]
+for jar in reference_jars:
     with jar.open('rb') as stream:
         digest = hashlib.file_digest(stream, 'sha256').hexdigest()
     inventory.append({'file':jar.name, 'sha256':digest})
@@ -29,7 +31,7 @@ manifest = {'minecraft':lock['minecraft'],'neoforge':lock['neoforge'],'mods':inv
 manifest_path = root/'validation/reference-modpack.json'
 if manifest_path.exists() and json.loads(manifest_path.read_text()) != manifest:
     raise SystemExit('Reference modpack inventory changed. Review validation/reference-modpack.json explicitly; test target was not changed.')
-for jar in sorted((source/'mods').glob('*.jar')):
+for jar in reference_jars:
     if jar.name not in baseline: shutil.copy2(jar, destination/'mods'/jar.name)
 for folder in ['config','defaultconfigs','datapacks','global_packs']:
     if (source/folder).is_dir(): shutil.copytree(source/folder, destination/folder, dirs_exist_ok=True)

@@ -1,0 +1,9 @@
+Verified minecolonies-1.1.1343-1.21.1-snapshot.jar
+Verified structurize-1.0.831-1.21.1-snapshot.jar
+Verified blockui-1.0.211-1.21.1-snapshot.jar
+Verified domum-ornamentum-1.0.234-snapshot-main.jar
+Verified multipiston-1.2.58-1.21.1.jar
+Verified towntalk-1.2.0.jar
+Applied documented headless GameTest chunk-ticket adjustments.
+Prepared 134 reference mods; 6 supplied through pinned Gradle dependencies.
+Isolated instance: /Users/oberon/Projects/coding/mods/minecraft/minecolonies-cult/run-modpack-gametest
