@@ -56,6 +56,7 @@ public final class CultLifecycleGameTests {
         colony.getCitizenManager().spawnOrCreateCitizen(child, level, pos.offset(1,0,2));
         helper.assertTrue(gate.getModule(CultRegistry.WORK).assignCitizen(leader), "Leader assigned");
         var speaker = (EntityCitizen) leader.getEntity().orElseThrow();
+        speaker.getInventoryCitizen().setStackInSlot(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BOOK));
         var hearer = (EntityCitizen) listener.getEntity().orElseThrow();
         var young = (EntityCitizen) child.getEntity().orElseThrow();
         speaker.setPos(pos.getX()+.5, pos.getY(), pos.getZ()+2.5);
@@ -90,6 +91,8 @@ public final class CultLifecycleGameTests {
                                 + "; loaded=" + level.hasChunkAt(speaker.blockPosition()) + "; time=" + level.getDayTime()
                                 + "; LOS=" + speaker.hasLineOfSight(hearer) + "; saturation=" + leader.getSaturation()
                                 + "; capacity=" + state.recruitCapacity() + "; saved=" + state.snapshot());
+                helper.assertTrue(speaker.getInventoryCitizen().getStackInSlot(0).getCount() == (expected < 6 ? 1 : 0),
+                        "Only the final conversion consumes the book");
                 helper.assertTrue(state.progress(child.getUUID()) == 0, "Children never recruited");
             });
         }

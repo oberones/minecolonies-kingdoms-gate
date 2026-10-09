@@ -69,6 +69,7 @@ public final class CultCapacityGameTests {
             entity.setNoAi(true); new CitizenAI(entity); actors.add(entity);
         }
         var leader = actors.getFirst().getCitizenData();
+        actors.getFirst().getInventoryCitizen().setStackInSlot(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BOOK, 5));
         for (var assigned : List.copyOf(gate.getModule(CultRegistry.WORK).getAssignedCitizen()))
             gate.getModule(CultRegistry.WORK).removeCitizen(assigned);
         helper.assertTrue(gate.getModule(CultRegistry.WORK).assignCitizen(leader), "Leader assigned through native module; level=" + gate.getBuildingLevel()
@@ -83,6 +84,8 @@ public final class CultCapacityGameTests {
             if (helper.getTick() % 5 == 0) actors.forEach(a -> a.getCitizenAI().tick());
         });
         helper.runAtTickTime(250, () -> {
+            helper.assertTrue(actors.getFirst().getInventoryCitizen().getStackInSlot(0).getCount() == 1,
+                    "Four simultaneous converts consume exactly four carried books");
             helper.assertTrue(state.recruitCount() == 4 && state.memberCount() == 5, "One native speech fills exactly four recruit places");
             helper.assertTrue(!state.isMember(actors.get(5).getCitizenData().getUUID()) && state.progress(actors.get(5).getCitizenData().getUUID()) == 5,
                     "Stable citizen IDs decide contention; fifth listener keeps five speeches");
@@ -92,11 +95,15 @@ public final class CultCapacityGameTests {
         });
         helper.runAtTickTime(400, () -> {
             helper.assertTrue(state.recruitCapacity() == 4 && state.progress(actors.get(5).getCitizenData().getUUID()) == 5, "Pending work cannot unlock recruitment or advance paused progress");
+            helper.assertTrue(actors.getFirst().getInventoryCitizen().getStackInSlot(0).getCount() == 1,
+                    "Capacity pause consumes no books");
             assertStatus(helper, gate, 4, 4, "full", leader.getName());
             gate.setBuildingLevel(2); gate.onUpgradeComplete(null, 2);
         });
         helper.runAtTickTime(650, () -> {
             helper.assertTrue(state.recruitCount() == 5 && state.isMember(actors.get(5).getCitizenData().getUUID()), "Completed upgrade resumes the pending recruit");
+            helper.assertTrue(actors.getFirst().getInventoryCitizen().getStackInSlot(0).isEmpty(),
+                    "Upgrade conversion consumes the last carried book");
             assertStatus(helper, gate, 5, 8, "active", leader.getName());
             gate.setBuildingLevel(1); gate.onUpgradeComplete(null, 1);
         });

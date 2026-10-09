@@ -131,10 +131,13 @@ final class ColonyRuntime {
 
     private void recruit(CultRules rules) {
         if (!state.canRecruit()) { recruitmentPaused = true; clearSpeech(); return; }
-        if (recruitmentPaused) { attemptedToday.clear(); nextSpeechTick = 0; recruitmentPaused = false; }
         EntityCitizen speaker = leaderEntity();
         if (!operational() || speaker == null || level.getDayTime() % CultState.DAY >= 12600
-                || !CultService.working(speaker) || !available(speaker) || raid()) { clearSpeech(); return; }
+                || !available(speaker) || raid()) { clearSpeech(); return; }
+        var leaderAI = ((com.kingdomsgate.cult.building.CultLeaderJob) leader.getJob()).getWorkerAI();
+        if (leaderAI == null || !leaderAI.hasBook()) { recruitmentPaused = true; clearSpeech(); return; }
+        if (!CultService.working(speaker)) { clearSpeech(); return; }
+        if (recruitmentPaused) { attemptedToday.clear(); nextSpeechTick = 0; recruitmentPaused = false; }
         if (routeDay != state.day()) { attemptedToday.clear(); routeDay = state.day(); }
         if (level.getGameTime() < nextSpeechTick) return;
         if (target == null) {
@@ -161,11 +164,13 @@ final class ColonyRuntime {
             EntityCitizen listener = citizen.getEntity().filter(EntityCitizen.class::isInstance).map(EntityCitizen.class::cast).orElse(null);
             boolean audible = available(listener) && listener != speaker && !listener.getCitizenSleepHandler().isAsleep()
                     && speaker.distanceToSqr(listener) <= Math.pow(rules.radius(gate.getBuildingLevel()), 2) && speaker.hasLineOfSight(listener);
+            if (!leaderAI.hasBook()) break;
             if (speech.sample(citizen.getUUID(), audible) && state.hear(citizen.getUUID(), state.day(), rules)) {
+                if (state.isPermanentMember(citizen.getUUID())) leaderAI.consumeBook();
                 CultService.refresh(citizen); data.setDirty();
             }
         }
-        if (!state.canRecruit() || ++speechTicks >= 100) { clearSpeech(); nextSpeechTick = level.getGameTime() + 100; }
+        if (!leaderAI.hasBook() || !state.canRecruit() || ++speechTicks >= 100) { clearSpeech(); nextSpeechTick = level.getGameTime() + 100; }
     }
     private void clearSpeech() { target = null; speech = null; speechTicks = 0; }
 

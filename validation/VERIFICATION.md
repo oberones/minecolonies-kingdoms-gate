@@ -1,5 +1,22 @@
 # Verification record — 0.2.0 growth update
 
+## Cult leader book requirement — 2026-10-09
+
+`GRADLE_USER_HOME="$PWD/.gradle-home" ./gradlew build runGameTestServer --offline --console=plain` passed: **14 JUnit tests and all 9 required GameTests**. Evidence: [build and native server log](evidence/books-2026-10-09/build-gametest.log) and JUnit XML files in the same directory. Gradle required local socket access outside the restricted sandbox. Tests used a fresh disposable `run-gametest/world`; earlier test worlds were archived under ignored `.tools/`. Reference installations, dependency locks, and player saves were untouched.
+
+The leader requires a carried ordinary `minecraft:book` throughout recruitment. Partial speech credits consume nothing; each new permanent convert consumes exactly one. Native worker requests replenish exhausted stock, with native open/completed-request deduplication and hut pickup. Existing carried stock is used before requesting more. Recruitment pauses without books and resumes without losing saved progress. Simultaneous listeners retain citizen-ID ordering. The custom hut now exposes its item-handler capability so native worker/courier inventory lookups can access its storage.
+
+Native checks cover rejection of writable books, no progress without an ordinary book, repeated request deduplication, automatic fulfillment from hut inventory, worker pickup, one conversion per delivered book, replacement requests and a second delivery/conversion, four simultaneous conversions consuming four books, no consumption while capacity is full, and no consumption for partial daily credits. Existing recruitment, capacity, upgrade, persistence, and ceremony checks pass. Development failures exposed missing worker idle/work transitions and the missing hut inventory capability; both were fixed before the passing run.
+
+These tests position stationary actors, seed pending speech progress, insert delivered books into hut storage, and accelerate the calendar. They do not establish natural courier/leader pathfinding or interactive acceptance. The copied full modpack was not rerun for this change.
+
+- [ ] In a disposable client world, inspect the leader's book request and fulfill it through player delivery and a real courier; observe natural return to work.
+- [ ] Restart a disposable world with an outstanding book request and verify native request recovery and pickup.
+- [ ] Confirm existing members can still attend a ceremony when the leader has no book.
+
+---
+
+
 **2026-10-09 (America/New_York): build and automated checks passed; interactive gameplay acceptance remains OPEN.**
 
 The delivered artifact is `build/libs/minecolonies-cult-0.2.0.jar`, SHA-256 `0e60703b3b0a4a00a759e9691efbcc6018287101e93de55f5c09c1797612b33d`. Its runtime classes, version metadata, structure-pack version 2, and all five packaged blueprint checksums were inspected. Client and server must use this same build. Reference installations and player saves were not modified; no commit, tag, or publication was performed.

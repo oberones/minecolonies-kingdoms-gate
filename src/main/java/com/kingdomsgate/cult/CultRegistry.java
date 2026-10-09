@@ -54,7 +54,13 @@ public final class CultRegistry {
             .addBuildingModuleProducer(BuildingModules.STATS_MODULE).addBuildingModuleProducer(BuildingModules.MIN_STOCK).createBuildingEntry());
     static { HAPPINESS.register("cult_membership", () -> new HappinessRegistry.HappinessFunctionEntry(CultService::happiness)); }
     public static void register(IEventBus bus) {
+        bus.addListener(CultRegistry::registerCapabilities);
         BLOCKS.register(bus); ITEMS.register(bus); ENTITIES.register(bus); JOBS.register(bus); BUILDINGS.register(bus); HAPPINESS.register(bus); TABS.register(bus);
+    }
+    /** Expose hut storage to native worker pickup and courier capability lookups. */
+    private static void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK,
+                GATE_ENTITY.get(), (tile, side) -> tile.getItemHandlerCap(side));
     }
     private CultRegistry() {}
 }
