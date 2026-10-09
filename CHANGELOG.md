@@ -1,3 +1,9 @@
+## 0.2.1 (2026-10-09)
+
+### Fix
+
+- update validation rules
+
 ## 0.2.0 (2026-10-09)
 
 ### Feat
