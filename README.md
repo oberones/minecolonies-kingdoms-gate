@@ -133,6 +133,70 @@ The preparation script copies mods and configuration, never the player’s saves
 
 `python3 tools/generate_assets.py` reproducibly rebuilds the original textures, five blueprints, and their provenance manifest. Gathering markers are connected to the entrance; the runtime checks their support and clearance again in the actual world. The GameTest suite validates all eight rotation/mirror combinations for each level.
 
+## GitHub Actions and releases
+
+`.github/workflows/ci.yml` runs `make test` for pull requests. Both CI jobs use
+Java 21 and download the six dependencies with
+`python3 tools/import_reference.py --download`. Download URLs are recorded in
+`tools/reference-downloads.json`; the unchanged `reference-lock.json` checksums
+remain authoritative. No local CurseForge installation or additional secrets
+are needed on GitHub runners.
+
+Commitizen manages release versions through `.cz.toml`. Install the Python
+Commitizen CLI (`brew install commitizen` on macOS, or `pipx install commitizen`)
+if `cz` is not already available. Use Conventional Commits: `fix:` produces a
+patch bump and `feat:` produces a minor bump. While `major_version_zero = true`,
+breaking changes also produce a minor bump.
+
+One-time setup for this repository's existing history: version `0.2.0` was
+recorded in code and the changelog without a matching tag. Create its baseline
+tag at the last existing `0.2.0` commit before the CI/release setup:
+
+```sh
+git tag -a 0.2.0 2b0c16d -m 'Release 0.2.0 baseline'
+```
+
+Skip this step if `git tag --list 0.2.0` already shows the tag. Commitizen needs
+it to determine new changes and preserve the hand-written `0.2.0` changelog.
+
+To release, commit all intended changes and merge them into `main`, then run:
+
+```sh
+git switch main
+git pull --ff-only
+cz bump
+git push --atomic --follow-tags origin main
+```
+
+`cz bump` chooses the next version from commits, updates `.cz.toml`, the default
+version in `build.gradle`, the installation JAR name above, and `CHANGELOG.md`,
+then creates a bump commit and an annotated version tag. Gradle derives the
+loader metadata and JAR manifest from that version. Historical migration notes,
+dependency versions, and verification records are intentionally not bumped.
+Start from a clean checkout so unrelated staged work does not enter the bump
+commit. `cz bump --dry-run` previews the next release; `cz bump --increment PATCH`
+or `cz bump --increment MINOR` selects an increment explicitly.
+
+The push command sends the bump commit and its annotated tag together, triggering
+the release build. A plain `git push` does not send tags by default. If `main`
+requires pull requests, merge the bump commit through the required review process
+and ensure its tag points to a commit retained in `main` before pushing the tag.
+
+Tags may use `0.3.0` or `v0.3.0`; Commitizen creates unprefixed tags. Suffixes such as `0.3.0-rc.1` publish a
+prerelease. The workflow rejects tagged commits outside `main` history. It
+checks out the tagged commit, runs `make build` (including unit tests), and
+publishes `minecolonies-cult-<version>.jar` to GitHub Releases with generated
+release notes. Only the addon JAR is uploaded. An existing release is not
+overwritten; use a new version tag for a replacement build.
+
+The tag overrides the JAR filename, manifest version, and loader metadata without
+editing source files. To reproduce that override locally, run
+`make build GRADLE_FLAGS='-PreleaseVersion=0.3.0'`. Untagged local builds retain
+the default version in `build.gradle`. GitHub supplies the release job's
+`GITHUB_TOKEN` with `contents: write`; repository/organization policy must allow
+GitHub Actions and that permission. These workflows do not run GameTests or
+establish interactive gameplay acceptance.
+
 ## Implementation boundaries
 
 `domain/` contains pure calendar, faith, and hearing rules. `CultSavedData` stores versioned records per dimension and colony, keyed by citizen UUID, independently of the hut. `ColonyRuntime` owns temporary navigation and participants; none of that AI ownership is serialized. Two narrowly scoped mixins integrate the exact pinned citizen state machine and both native happiness deserialization paths. The status tab uses MineColonies’ existing building-view synchronization.

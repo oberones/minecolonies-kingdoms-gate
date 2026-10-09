@@ -1,5 +1,29 @@
 # Verification record — 0.2.0 growth update
 
+## Commitizen release version configuration — 2026-10-09
+
+Commitizen 4.8.3 was exercised in a disposable clone with the working `.cz.toml`,
+`build.gradle`, and README. The existing history lacked a `0.2.0` tag despite
+that version appearing in configuration and the changelog; the initial check
+failed with `No tag found to do an incremental changelog`. After applying the
+README's one-time baseline-tag command in the clone, plain `cz bump` passed for
+both a feature-driven `0.3.0` release and a fix-driven `0.3.1` release.
+
+Checks confirmed matching configuration/Gradle/installation-filename versions,
+preservation of historical migration notes and the hand-written changelog,
+annotated tags pointing at bump commits, and a clean clone after each bump.
+No commits, tags, pushes, or version bumps were made in the working repository;
+its pre-existing staged CI changes were preserved. No gameplay code changed.
+
+## GitHub Actions test/release pipeline — 2026-10-09
+
+- `python3 tools/import_reference.py --download` downloaded all six public artifacts and verified their existing SHA-256 checksums. Download URLs came from the reference installation's CurseForge metadata; `reference-lock.json` and Gradle locks were unchanged.
+- `make test GRADLE_FLAGS='--offline --console=plain --rerun-tasks'` passed with 14 JUnit tests, zero failures/errors.
+- `make build GRADLE_FLAGS='--offline --console=plain -PreleaseVersion=0.3.0-rc.1'` passed. ZIP inspection confirmed the version in the output JAR filename, manifest, and loader metadata. Existing Java/Gradle deprecation warnings remain.
+- Actionlint 1.7.7 passed for `.github/workflows/ci.yml` (ShellCheck was unavailable and disabled). Seven checks of the workflow's validation shell in a disposable Git repository accepted supported tags and rejected invalid tags and off-main commits.
+- A temporary importer fixture confirmed a corrupt download fails before replacing any existing JAR, and local-directory import still works. `git diff --check` passed.
+- Downloads and Gradle required network/local socket access outside the restricted sandbox. These are local macOS checks, not an executed Ubuntu GitHub Actions run. No tag, commit, push, or GitHub release was created. GameTests and interactive acceptance were not rerun for this CI/version metadata change.
+
 ## Makefile entry points — 2026-10-09
 
 - `make help` and dry runs of every action target passed.

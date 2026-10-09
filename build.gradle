@@ -6,7 +6,7 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.148'
 }
 
-version = '0.2.0'
+version = providers.gradleProperty('releaseVersion').getOrElse('0.2.0')
 group = 'com.kingdomsgate'
 base.archivesName = 'minecolonies-cult'
 java {
@@ -65,6 +65,12 @@ tasks.withType(JavaCompile).configureEach {
 }
 tasks.named('test') { useJUnitPlatform() }
 tasks.named('check') { dependsOn verifyReference }
+tasks.named('processResources') {
+    inputs.property('modVersion', project.version.toString())
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand(modVersion: project.version.toString())
+    }
+}
 tasks.named('jar') {
     from('reference-lock.json') { into 'META-INF' }
     from('LICENSE')
