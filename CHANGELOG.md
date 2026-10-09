@@ -1,3 +1,9 @@
+## 0.2.2 (2026-10-09)
+
+### Fix
+
+- address ci platform mismatch
+
 ## 0.2.1 (2026-10-09)
 
 ### Fix
