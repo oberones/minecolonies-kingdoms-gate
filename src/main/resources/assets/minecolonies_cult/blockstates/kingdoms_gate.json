@@ -1,0 +1,1 @@
+{"variants":{"facing=north":{"model":"minecolonies_cult:block/kingdoms_gate"},"facing=east":{"model":"minecolonies_cult:block/kingdoms_gate","y":90},"facing=south":{"model":"minecolonies_cult:block/kingdoms_gate","y":180},"facing=west":{"model":"minecolonies_cult:block/kingdoms_gate","y":270}}}

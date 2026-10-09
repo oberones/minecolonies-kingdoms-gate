@@ -1,0 +1,20 @@
+{
+  "reason": "The no-player GameTest harness stalled before test initialization while Better Chunk Loading unloaded its structure area. Only this disposable headless configuration is changed. The reference client test keeps original settings.",
+  "file": "config/betterchunkloading.json",
+  "overrides": {
+    "enablePrediction": false,
+    "enableSmartChunkLoading": false,
+    "enableSmartPostProcessing": false,
+    "optimizeWaiting": false
+  },
+  "additional": {
+    "config/limitedchunks.json": {
+      "excludedtickets": [
+        "forced",
+        "gametest",
+        "start",
+        "unknown"
+      ]
+    }
+  }
+}

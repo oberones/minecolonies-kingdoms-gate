@@ -1,0 +1,21 @@
+{
+  "block.minecolonies_cult.kingdoms_gate": "Kingdom's Gate",
+  "com.minecolonies_cult.building.kingdoms_gate": "Kingdom's Gate",
+  "com.minecolonies_cult.job.cult_leader": "Cult Leader",
+  "com.minecolonies_cult.coremod.job.cult_leader": "Cult Leader",
+  "com.minecolonies.building.kingdoms_gate.desc": "A gathering place for those who hear the call beyond the gate.",
+  "minecolonies_cult.only_one_gate": "This colony already has a Kingdom's Gate.",
+  "minecolonies_cult.sermon": "%s: Beyond the gate, every wandering soul has a place. Listen, and remember.",
+  "com.minecolonies.coremod.gui.townhall.happiness.minecolonies_cult_membership": "Cult Membership",
+  "com.minecolonies.coremod.gui.townhall.happiness.desc.minecolonies_cult_membership": "Belonging to the cult brings comfort. Higher Kingdom's Gate levels strengthen this bonus. Faith fades after seven days without a functioning Gate and leader by default.",
+  "minecolonies_cult.status.title": "The Congregation",
+  "minecolonies_cult.status.members": "Members: %s",
+  "minecolonies_cult.status.member": "Member of the cult",
+  "minecolonies_cult.status.progress": "Heard %s / %s speeches",
+  "minecolonies_cult.status.next": "Next midnight gathering: in %s days",
+  "minecolonies_cult.status.not_started": "Build and staff the Gate to begin.",
+  "minecolonies_cult.status.grace": "Faith fades in %s days. Restore the Gate and leader.",
+  "minecolonies_cult.status.active": "The Gate is open. The congregation grows.",
+  "minecolonies_cult.status.inactive": "A constructed Gate needs a Cult Leader.",
+  "minecolonies_cult.status.empty": "No adult citizens yet."
+}

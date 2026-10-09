@@ -1,0 +1,72 @@
+import groovy.json.JsonSlurper
+import java.security.MessageDigest
+
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+
+version = '0.1.0'
+group = 'com.kingdomsgate'
+base.archivesName = 'minecolonies-cult'
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    withSourcesJar()
+}
+dependencyLocking { lockAllConfigurations() }
+repositories { mavenCentral() }
+
+def reference = new JsonSlurper().parse(file('reference-lock.json'))
+def verifyReference = tasks.register('verifyReference') {
+    inputs.file('reference-lock.json')
+    reference.artifacts.each { inputs.file("libs/${it.file}") }
+    doLast {
+        reference.artifacts.each { entry ->
+            def artifact = file("libs/${entry.file}")
+            if (!artifact.exists()) throw new GradleException("Missing ${artifact.name}; run python3 tools/import_reference.py")
+            def hash = MessageDigest.getInstance('SHA-256').digest(artifact.bytes).encodeHex().toString()
+            if (hash != entry.sha256) throw new GradleException("Reference checksum mismatch: ${artifact.name}")
+        }
+    }
+}
+
+neoForge {
+    version = '21.1.218'
+    runs {
+        client { client(); gameDirectory = project.file('run-client') }
+        modpackClient { client(); gameDirectory = project.file('run-modpack-client') }
+        server { server(); gameDirectory = project.file('run-server'); programArgument '--nogui' }
+        gameTestServer {
+            type = 'gameTestServer'
+            gameDirectory = project.file('run-gametest')
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'minecolonies_cult'
+            systemProperty 'mixin.debug.export', 'true'
+        }
+        modpackGameTestServer {
+            type = 'gameTestServer'
+            gameDirectory = project.file('run-modpack-gametest')
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'minecolonies_cult'
+        }
+        configureEach { logLevel = org.slf4j.event.Level.INFO }
+    }
+    mods { minecolonies_cult { sourceSet sourceSets.main } }
+}
+
+dependencies {
+    reference.artifacts.each { implementation files("libs/${it.file}") }
+    testImplementation platform('org.junit:junit-bom:5.11.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    dependsOn verifyReference
+    options.encoding = 'UTF-8'
+}
+tasks.named('test') { useJUnitPlatform() }
+tasks.named('check') { dependsOn verifyReference }
+tasks.named('jar') {
+    from('reference-lock.json') { into 'META-INF' }
+    from('LICENSE')
+    manifest.attributes('Implementation-Version': project.version)
+}

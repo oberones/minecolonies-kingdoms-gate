@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "pack-format": 1,
+  "name": "Kingdom's Gate",
+  "desc": "A gothic congregation hall, growing from a timber chapel into a twin-spired sanctuary.",
+  "authors": [
+    "Kingdom's Gate contributors"
+  ],
+  "mods": [
+    "minecolonies",
+    "structurize",
+    "minecolonies_cult"
+  ],
+  "icon": "kingdoms_gate.png"
+}

@@ -1,0 +1,86 @@
+{
+  "generator": "tools/generate_assets.py",
+  "art": "Original deterministic pixel art and block architecture; no copied textures or blueprints.",
+  "blueprints": [
+    {
+      "level": 1,
+      "dimensions": [
+        29,
+        24,
+        35
+      ],
+      "anchor": [
+        14,
+        1,
+        3
+      ],
+      "gatheringSlots": 433,
+      "blocks": 1668,
+      "sha256": "2953bd4e77cd91fff9a35d30e0a7fe9d17561875ed0dfcb9121e5fa607d6045a"
+    },
+    {
+      "level": 2,
+      "dimensions": [
+        29,
+        24,
+        35
+      ],
+      "anchor": [
+        14,
+        1,
+        3
+      ],
+      "gatheringSlots": 417,
+      "blocks": 2061,
+      "sha256": "81742381839ea34f765f72ef0539cc2a76b989ae1f0af1318816f5aa421b0716"
+    },
+    {
+      "level": 3,
+      "dimensions": [
+        29,
+        24,
+        35
+      ],
+      "anchor": [
+        14,
+        1,
+        3
+      ],
+      "gatheringSlots": 413,
+      "blocks": 2275,
+      "sha256": "002507b6f0e42ea3aa62a87fa4a3567d96abebdc2c39006203b6885dbdfc80f4"
+    },
+    {
+      "level": 4,
+      "dimensions": [
+        29,
+        24,
+        35
+      ],
+      "anchor": [
+        14,
+        1,
+        3
+      ],
+      "gatheringSlots": 411,
+      "blocks": 2493,
+      "sha256": "caae9ca870c3065eba786a38f9fd060f6319ca180c7e76051cad9e386aa2eb9d"
+    },
+    {
+      "level": 5,
+      "dimensions": [
+        29,
+        24,
+        35
+      ],
+      "anchor": [
+        14,
+        1,
+        3
+      ],
+      "gatheringSlots": 391,
+      "blocks": 3227,
+      "sha256": "744cfd398a2151a9df4f1184bbddc7aa83e3c79fafda30361c9d5540ad4452fa"
+    }
+  ]
+}
