@@ -1,5 +1,21 @@
 # Verification record — 0.2.0 growth update
 
+## CI dependency metadata verification repair — 2026-10-09
+
+The reported release failure lacked `.module` verification entries for JUnit
+BOM 5.9.3, 5.10.0, and 5.10.1. Downloaded each from Maven Central and NeoForged
+Releases and confirmed identical SHA-256 values before adding explicit entries.
+A refreshed local build exposed one additional omission, the 5.11.4 `.pom`,
+which was verified through the same two-repository comparison. Dependency
+versions, locks, and strict verification settings were unchanged.
+
+`make build GRADLE_FLAGS='--console=plain --refresh-dependencies'` passed in
+29 seconds. Build tasks were mostly up-to-date and tests were restored from
+cache; this validates dependency resolution, not a fresh test execution.
+`git diff --check` passed. Validation ran on macOS with network/local socket
+access. Ubuntu GitHub execution remains unverified; the release tag must
+include this repair for the workflow to use it.
+
 ## Commitizen release version configuration — 2026-10-09
 
 Commitizen 4.8.3 was exercised in a disposable clone with the working `.cz.toml`,
