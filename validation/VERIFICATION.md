@@ -1,5 +1,35 @@
 # Verification record — 0.2.0 growth update
 
+## Linux dependency locking repair — 2026-10-09
+
+The GitHub Linux failure came from applying macOS runtime lock memberships to
+Linux dependency variants. `build.gradle` now selects `gradle/linux.lockfile`
+on Linux and retains the original `gradle.lockfile` for macOS. The original file
+is byte-for-byte unchanged. The new Gradle-generated lock has identical module
+versions; only the configuration memberships for `java-objc-bridge:1.1` and
+`netty-transport-native-epoll:4.1.97.Final` differ.
+
+Generated the Linux lock with `dependencies --write-locks` using a temporary
+Gradle init script selecting `net.neoforged.operatingsystem=linux` and the Linux
+lockfile. The subsequent build exposed eight missing LWJGL 3.3.3
+`natives-linux.jar` checksums. Each was downloaded independently from Maven
+Central and Mojang Minecraft Libraries and matched byte-for-byte before its
+SHA-256 was added. Strict dependency locking and checksum verification remain
+enabled; CI does not rewrite locks.
+
+`make build GRADLE_FLAGS='--offline --console=plain --rerun-tasks -I
+/tmp/kingdoms-gate-linux-resolution.gradle'` passed with all eight Gradle tasks
+executed and 14 JUnit tests, zero failures/errors. The init script selected Linux
+variants on all configurations and the new Linux lockfile, without changing
+the JVM's operating system. A subsequent normal
+`make build GRADLE_FLAGS='--offline --console=plain'` passed with the original
+macOS lock. `git diff --check` passed.
+
+These builds ran on macOS; they validate Linux dependency resolution and
+packaging, not execution on Linux. Docker was unavailable because its daemon
+was not running. No GameTest or client/server launch, commit, tag, push, or
+GitHub release was performed. The next GitHub tag must include these changes.
+
 ## CI dependency metadata verification repair — 2026-10-09
 
 The reported release failure lacked `.module` verification entries for JUnit

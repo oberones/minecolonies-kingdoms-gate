@@ -118,6 +118,14 @@ GRADLE_USER_HOME="$PWD/.gradle-home" ./gradlew runClient
 
 The importer defaults to the original MC-TechColonies mods directory recorded in the manifest. It reads that installation without modifying it. Use `python3 tools/import_reference.py --help` for an alternate source directory. Gradle uses a Java 21 toolchain and downloads it when necessary. The wrapper/plugin versions are pinned. `verifyReference` checks all six local JARs before compilation; Gradle dependency verification checks downloaded build dependencies.
 
+Minecraft's native runtime dependencies vary by operating system. Gradle uses
+`gradle/linux.lockfile` on Linux (including GitHub Actions) and retains
+`gradle.lockfile` for macOS development. Both pin the same shared dependency
+versions. When intentionally updating dependencies, regenerate locks on each
+platform with `./gradlew dependencies --write-locks`, using the local Gradle
+cache convention above, and review both files. CI consumes the checked-in locks;
+it does not regenerate them or disable checksum verification.
+
 `runServer` starts a regular dedicated development server. Its EULA must be accepted by the person operating it. The automated checks use Minecraft’s separate GameTest server in a disposable world.
 
 For a copy of the reference modpack:

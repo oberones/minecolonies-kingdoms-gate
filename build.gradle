@@ -13,7 +13,13 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
     withSourcesJar()
 }
-dependencyLocking { lockAllConfigurations() }
+// Minecraft selects different native dependencies on Linux and macOS.
+dependencyLocking {
+    lockAllConfigurations()
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('linux')) {
+        lockFile = file('gradle/linux.lockfile')
+    }
+}
 repositories { mavenCentral() }
 
 def reference = new JsonSlurper().parse(file('reference-lock.json'))
