@@ -1,5 +1,12 @@
 # Verification record — 0.2.0 growth update
 
+## Makefile entry points — 2026-10-09
+
+- `make help` and dry runs of every action target passed.
+- Six temporary command-stub checks passed for default/filtered tests, default/alternate dependency import, headless preparation, and ordered rebuild. These checked argument forwarding and the exported cache path, including executable and directory paths containing spaces.
+- `make build GRADLE_FLAGS='--offline --console=plain'` passed with reference checksum verification; compilation, packaging, and JUnit tasks were up-to-date. Gradle required local socket access outside the restricted sandbox.
+- `git diff --check` passed. No gameplay code changed; Minecraft clients, servers, and GameTests were not launched for this Makefile change. Preparation and asset generation were dry-run only.
+
 ## Cult leader book requirement — 2026-10-09
 
 `GRADLE_USER_HOME="$PWD/.gradle-home" ./gradlew build runGameTestServer --offline --console=plain` passed: **14 JUnit tests and all 9 required GameTests**. Evidence: [build and native server log](evidence/books-2026-10-09/build-gametest.log) and JUnit XML files in the same directory. Gradle required local socket access outside the restricted sandbox. Tests used a fresh disposable `run-gametest/world`; earlier test worlds were archived under ignored `.tools/`. Reference installations, dependency locks, and player saves were untouched.

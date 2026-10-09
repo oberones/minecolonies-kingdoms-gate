@@ -76,6 +76,39 @@ Change configuration with the server stopped. Threshold/range/bonus changes appl
 
 ## Build and test
 
+The root Makefile wraps the commands below. Run `make` or `make help` for the
+complete target list. It defaults to the repository-local `.gradle-home` cache
+and uses the Gradle wrapper. Python tooling requires Python 3.11 or newer.
+
+```sh
+make setup                          # Import the six checksum-pinned dependencies
+make build                          # Compile, run unit tests, package JARs
+make test TEST='*CultStateTest'       # Run a selected JUnit class/method pattern
+make verify                         # Build plus minimal-dependency GameTests
+make client                         # Launch the development client
+make assets                         # Regenerate tracked assets and provenance
+make build GRADLE_FLAGS='--offline --console=plain'
+```
+
+Use `make setup MODS='/path/to/mods'` for an alternate dependency source.
+`GRADLE`, `PYTHON`, and `GRADLE_USER_HOME` can also be overridden. `make clean`
+removes Gradle build outputs while preserving dependency caches and run worlds;
+`make rebuild` runs clean followed by build in one ordered Gradle invocation.
+Run cleanup separately from other targets, rather than `make -j clean build`.
+Build outputs are in `build/libs/`, and unit-test reports are in
+`build/reports/tests/test/index.html`.
+
+For the copied modpack, run `make prepare-modpack-client` followed by
+`make modpack-client`, or `make prepare-modpack-headless` followed by
+`make modpack-gametest`. `make prepare-modpack-server` prepares the server copy
+without the headless adjustments. Preparation always uses the recorded reference
+installation (`MODS` applies only to dependency import), and recopies its
+configuration. Launch targets do not repeat preparation. GameTests use the
+disposable `run-gametest/` and `run-modpack-gametest/` directories; Make does not
+erase existing test worlds. `make server` requires operator EULA acceptance.
+
+Equivalent direct commands:
+
 ```sh
 python3 tools/import_reference.py
 GRADLE_USER_HOME="$PWD/.gradle-home" ./gradlew build
