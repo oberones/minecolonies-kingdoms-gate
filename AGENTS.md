@@ -20,7 +20,7 @@ Run commands from the repository root. Use the Gradle wrapper and set `export GR
 - `./gradlew runClient` launches the development client; `./gradlew runServer` launches a dedicated server requiring operator EULA acceptance.
 - `python3 tools/generate_assets.py` regenerates textures, blueprints, and provenance.
 
-See `README.md` for copied-modpack preparation and launch commands.
+See the development workflow below for Make targets, copied-modpack preparation, and launch commands.
 
 ## Coding Style & Naming Conventions
 
@@ -37,3 +37,207 @@ Commitizen configures Conventional Commits; history includes `feat: initial mvp`
 ## Dependency & World Safety
 
 Preserve `reference-lock.json`, Gradle locks, and checksum verification. Keep dependency JARs and local run directories untracked. Use disposable worlds; modpack preparation must leave reference installations and player saves untouched.
+
+## Dependency compatibility and verification
+
+This release targets **MineColonies 1.1.1343-1.21.1-snapshot**, **NeoForge 21.1.218**, Minecraft **1.21.1**, and **Java 21**. It is not built for 1.1.1403. The loader requires the exact Minecraft, NeoForge, and MineColonies versions.
+
+`reference-lock.json` records the six dependency versions, original filenames, and SHA-256 checksums. The authoritative MineColonies checksum is:
+
+```text
+5237cb14b86e2774070d4b825c1e52a29cf058216e9625f6dfb2258e5553ab1d
+```
+
+| Dependency | Development/test version |
+| --- | --- |
+| MineColonies | 1.1.1343-1.21.1-snapshot |
+| Structurize | 1.0.831-1.21.1 |
+| BlockUI | 1.0.211-1.21.1-snapshot |
+| Domum Ornamentum | 1.0.234-snapshot |
+| Multi-Piston | 1.2.58-1.21.1 |
+| TownTalk | 1.2.0 |
+
+The dependencies are not bundled or redistributed inside the addon. A future change in the reference folder does not update the target: importing or compiling with a changed reference JAR fails checksum verification.
+
+## Gameplay contracts
+
+Preserve these rules when changing gameplay. Values below describe the default server configuration.
+
+1. Back up the intended world and begin with a disposable test world.
+2. Install the pinned dependencies and put `minecolonies-cult-<version>.jar` in `mods` on **both the client and server**. Single-player also needs the addon in its client installation.
+3. Craft Kingdom’s Gate with a book surrounded by eight planks. Its block is also available in the Kingdom’s Gate creative tab.
+4. Use the MineColonies build tool, select the **Kingdom’s Gate** structure pack, and choose `mysticism/kingdoms_gate1`. The five blueprints grow from 9 × 13 to 29 × 35 blocks around the same hut position. Leave the final 29 × 35 footprint clear: in the unrotated preview it extends 14 blocks to each side of the hut, 3 in front, and 31 behind it. Rotation/mirroring rotates this reserved area too. Standard construction, upgrade, repair, inventory, hiring, and minimum-stock controls are provided by MineColonies.
+5. Construct level 1 and assign one adult citizen as Cult Leader through the hut’s worker controls. Only one Gate can be placed per colony. The leader receives cult membership benefits while assigned, occupying a separate place from recruited members.
+6. Open the hut’s congregation tab to see recruit occupancy/capacity, the leader, each adult’s speech progress, the next gathering, and any faith countdown.
+
+During the native work period, a healthy leader approaches adult colony citizens, including guards, and gives five-second speeches. A listener must stay within range and line of sight for all 100 ticks. Nearby adults may listen together; children, visitors, sleeping listeners, and unavailable citizens do not receive credit. Each citizen can receive one credit per Minecraft day, joining after six distinct days. Members retain their jobs. The leader must carry an ordinary Minecraft book to give speeches. Each successful conversion consumes one book; partial daily progress consumes none. When none remain, the leader requests a replacement through MineColonies’ normal worker resource system and resumes after supply arrives. Writable, written, and enchanted books do not qualify. With limited books, simultaneous conversions use citizen-ID order and unfunded listeners retain their progress.
+
+| Building level | Recruit capacity (+1 leader) | Footprint | Hearing radius | Native happiness factor, weight 1 |
+| --- | --- | --- | --- | --- |
+| 1 | 4 | 9 × 13 | 8 | 1.25 |
+| 2 | 8 | 13 × 17 | 10 | 1.50 |
+| 3 | 16 | 17 × 23 | 12 | 1.75 |
+| 4 | 24 | 23 × 29 | 14 | 2.00 |
+| 5 | 32 | 29 × 35 | 16 | 2.25 |
+
+Capacity is fixed by the **completed** level. Queuing an upgrade does not unlock recruits. When full, the leader pauses recruitment speeches without changing partial progress. Recruitment resumes after an upgrade or a vacancy; citizens still need a complete speech to earn another daily credit. Simultaneous final credits are processed in citizen-ID order.
+
+Automatic leader membership ends on dismissal; previously earned speech progress remains. A previously recruited leader keeps permanent membership and is counted once. Existing overfull congregations and members returning from leadership keep their membership and bonuses, but further recruitment is blocked until there is space.
+
+These are weighted factors in MineColonies’ existing calculation, **not additional happiness points**. MineColonies’ cap of 10 remains in effect. Losing the completed Gate or its leader begins a seven-day grace period. Members keep their last active level’s bonus; restoring operation cancels the countdown. Expiry clears membership and all speech progress. Entity/chunk unloading, illness, rain, raids, and missed gatherings do not themselves start faith decay.
+
+The calendar begins when construction and staffing first become operational. Every seventh Minecraft day, members gather at tick 16000, perform the ritual at 18000–18600, and then resume native AI. Native sleep handling wakes sleeping attendees and controls their return to their homes; guards resume their native duty schedule. The ritual uses turns, synchronized arm gestures, low-pitched wordless sounds, and purple particles. The addon neither teleports attendees nor requests chunk tickets. The leader has priority, followed by citizen ID. Each attendee has a distinct safe position; attendance is limited to available positions and the level’s capacity plus the leader. Over-capacity members keep their bonuses even when they cannot attend. Unreachable/unavailable attendees drop out. An unavailable leader, invalid Gate, unloaded gathering area, or relevant vanilla/MineColonies raid cancels the event.
+
+Missed nights/weeks are skipped. Each occurrence is saved as consumed before gathering begins; restarting during a ceremony cancels it instead of resuming it. Backward time changes cannot grant duplicate daily speeches or replay an already consumed ceremony; the saved calendar waits for world time to catch up.
+
+## Save and structure migrations
+
+Back up worlds before installing this version on both client and server. Version 0.2.0 writes cult save format 2 and reads format 1 without deleting memberships or speech progress. Historical memberships remain permanent because their recruitment origin was not recorded. Downgrading the mod requires restoring the backup; the older version cannot read format 2. Client and server must use the same addon build because congregation synchronization has changed.
+
+Structure-pack version 2 replaces the old designs at their existing paths. Installing it does not rebuild world blocks. Use normal builder upgrade/repair work to adopt the new design. Old lower-level Gates occupied larger plots: blocks outside the new blueprint can remain and need manual cleanup. There is no automatic demolition or legacy design pack.
+
+## Server configuration semantics
+
+The world’s `serverconfig/minecolonies_cult-server.toml` exposes:
+
+| Setting | Default |
+| --- | --- |
+| `speechesRequired` | 6 |
+| `faithGraceDays` | 7 |
+| `ritualIntervalDays` | 7 |
+| `baseHearingRadius` | 8 |
+| `hearingRadiusPerLevel` | 2 |
+| `baseHappinessFactor` | 1.25 |
+| `happinessFactorPerLevel` | 0.25 |
+
+Change configuration with the server stopped. Threshold/range/bonus changes apply to subsequent gameplay. Existing members stay members, and an established next ceremony remains scheduled; later intervals use the new setting. The grace duration is applied to the saved time at which operation was lost.
+
+## Development workflow
+
+The root Makefile wraps the commands below. Run `make` or `make help` for the
+complete target list. It defaults to the repository-local `.gradle-home` cache
+and uses the Gradle wrapper. Python tooling requires Python 3.11 or newer.
+
+```sh
+make setup                          # Import the six checksum-pinned dependencies
+make build                          # Compile, run unit tests, package JARs
+make test TEST='*CultStateTest'       # Run a selected JUnit class/method pattern
+make verify                         # Build plus minimal-dependency GameTests
+make client                         # Launch the development client
+make assets                         # Regenerate tracked assets and provenance
+make build GRADLE_FLAGS='--offline --console=plain'
+```
+
+Use `make setup MODS='/path/to/mods'` for an alternate dependency source.
+`GRADLE`, `PYTHON`, and `GRADLE_USER_HOME` can also be overridden. `make clean`
+removes Gradle build outputs while preserving dependency caches and run worlds;
+`make rebuild` runs clean followed by build in one ordered Gradle invocation.
+Run cleanup separately from other targets, rather than `make -j clean build`.
+Build outputs are in `build/libs/`, and unit-test reports are in
+`build/reports/tests/test/index.html`.
+
+For the copied modpack, run `make prepare-modpack-client` followed by
+`make modpack-client`, or `make prepare-modpack-headless` followed by
+`make modpack-gametest`. `make prepare-modpack-server` prepares the server copy
+without the headless adjustments. Preparation always uses the recorded reference
+installation (`MODS` applies only to dependency import), and recopies its
+configuration. Launch targets do not repeat preparation. GameTests use the
+disposable `run-gametest/` and `run-modpack-gametest/` directories; Make does not
+erase existing test worlds. `make server` requires operator EULA acceptance.
+
+Equivalent direct commands:
+
+```sh
+python3 tools/import_reference.py
+GRADLE_USER_HOME="$PWD/.gradle-home" ./gradlew build
+GRADLE_USER_HOME="$PWD/.gradle-home" ./gradlew runGameTestServer
+GRADLE_USER_HOME="$PWD/.gradle-home" ./gradlew runClient
+```
+
+The importer defaults to the original MC-TechColonies mods directory recorded in the manifest. It reads that installation without modifying it. Use `python3 tools/import_reference.py --help` for an alternate source directory. Gradle uses a Java 21 toolchain and downloads it when necessary. The wrapper/plugin versions are pinned. `verifyReference` checks all six local JARs before compilation; Gradle dependency verification checks downloaded build dependencies.
+
+Minecraft's native runtime dependencies vary by operating system. Gradle uses
+`gradle/linux.lockfile` on Linux (including GitHub Actions) and retains
+`gradle.lockfile` for macOS development. Both pin the same shared dependency
+versions. When intentionally updating dependencies, regenerate locks on each
+platform with `./gradlew dependencies --write-locks`, using the local Gradle
+cache convention above, and review both files. CI consumes the checked-in locks;
+it does not regenerate them or disable checksum verification.
+
+`runServer` starts a regular dedicated development server. Its EULA must be accepted by the person operating it. The automated checks use Minecraft’s separate GameTest server in a disposable world.
+
+For a copy of the reference modpack:
+
+```sh
+python3 tools/prepare_modpack_test.py
+GRADLE_USER_HOME="$PWD/.gradle-home" ./gradlew runModpackClient
+python3 tools/prepare_modpack_test.py --server --headless-adjustments
+GRADLE_USER_HOME="$PWD/.gradle-home" ./gradlew runModpackGameTestServer
+```
+
+The preparation script copies mods and configuration, never the player’s saves. It excludes installed `minecolonies-cult-*.jar` releases because Gradle supplies the addon under test; all 134 reference dependencies remain checksum-pinned. Some chunk optimizers require the documented test-only adjustments in `validation/headless-config-overrides.json` for a headless server with no real players. See `validation/VERIFICATION.md` for the exact evidence and remaining interactive acceptance checks.
+
+`python3 tools/generate_assets.py` reproducibly rebuilds the original textures, five blueprints, and their provenance manifest. Gathering markers are connected to the entrance; the runtime checks their support and clearance again in the actual world. The GameTest suite validates all eight rotation/mirror combinations for each level.
+
+## GitHub Actions and releases
+
+`.github/workflows/ci.yml` runs `make test` for pull requests. Both CI jobs use
+Java 21 and download the six dependencies with
+`python3 tools/import_reference.py --download`. Download URLs are recorded in
+`tools/reference-downloads.json`; the unchanged `reference-lock.json` checksums
+remain authoritative. No local CurseForge installation or additional secrets
+are needed on GitHub runners.
+
+Commitizen manages release versions through `.cz.toml`. Install the Python
+Commitizen CLI (`brew install commitizen` on macOS, or `pipx install commitizen`)
+if `cz` is not already available. Use Conventional Commits: `fix:` produces a
+patch bump and `feat:` produces a minor bump. While `major_version_zero = true`,
+breaking changes also produce a minor bump.
+
+The historical `0.2.0` baseline tag already exists; do not recreate or move it.
+
+To release, commit all intended changes and merge them into `main`, then run:
+
+```sh
+git switch main
+git pull --ff-only
+cz bump
+git push --atomic --follow-tags origin main
+```
+
+`cz bump` chooses the next version from commits, updates `.cz.toml` and
+`CHANGELOG.md`, then creates a bump commit and an annotated version tag.
+The current configuration has no `version_files` entries, so it does not update
+the default version in `build.gradle` or documentation. The release workflow
+passes the tag version to Gradle through `releaseVersion`; Gradle uses that
+value for loader metadata and the JAR manifest. Historical migration notes,
+dependency versions, and verification records are intentionally not bumped.
+Start from a clean checkout so unrelated staged work does not enter the bump
+commit. `cz bump --dry-run` previews the next release; `cz bump --increment PATCH`
+or `cz bump --increment MINOR` selects an increment explicitly.
+
+The push command sends the bump commit and its annotated tag together, triggering
+the release build. A plain `git push` does not send tags by default. If `main`
+requires pull requests, merge the bump commit through the required review process
+and ensure its tag points to a commit retained in `main` before pushing the tag.
+
+Tags may use `0.3.0` or `v0.3.0`; Commitizen creates unprefixed tags. Suffixes such as `0.3.0-rc.1` publish a
+prerelease. The workflow rejects tagged commits outside `main` history. It
+checks out the tagged commit, runs `make build` (including unit tests), and
+publishes `minecolonies-cult-<version>.jar` to GitHub Releases with generated
+release notes. Only the addon JAR is uploaded. An existing release is not
+overwritten; use a new version tag for a replacement build.
+
+The tag overrides the JAR filename, manifest version, and loader metadata without
+editing source files. To reproduce that override locally, run
+`make build GRADLE_FLAGS='-PreleaseVersion=0.3.0'`. Untagged local builds retain
+the default version in `build.gradle`. GitHub supplies the release job's
+`GITHUB_TOKEN` with `contents: write`; repository/organization policy must allow
+GitHub Actions and that permission. These workflows do not run GameTests or
+establish interactive gameplay acceptance.
+
+## Implementation boundaries
+
+`domain/` contains pure calendar, faith, and hearing rules. `CultSavedData` stores versioned records per dimension and colony, keyed by citizen UUID, independently of the hut. `ColonyRuntime` owns temporary navigation and participants; none of that AI ownership is serialized. Two narrowly scoped mixins integrate the exact pinned citizen state machine and both native happiness deserialization paths. The status tab uses MineColonies’ existing building-view synchronization.
+
+This is an initial implementation. Automated checks and successful client startup do not establish builder pathfinding, robe/UI appearance, sound quality, or an observed return to an actual residence bed. The acceptance checklist records those separately.
